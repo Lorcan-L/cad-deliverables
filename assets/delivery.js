@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 当前项目 project.json 的版本、生产放行条件、数量、文件与验证结果。
- * [OUTPUT]: 交付页内容、可用文件下载、完整 PDF 入口、历史版下载及可追溯图页缩略图。
+ * [OUTPUT]: 交付页内容、文件下载、三维查看器、PDF入口、历史版及公开校验来源。
  * [POS]: 静态展示控制层，内容通过 textContent 安全写入。
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
@@ -100,6 +100,28 @@ function renderHistory(history = []) {
   select('history').hidden = history.length === 0;
 }
 
+function renderViewer(viewer) {
+  const path = viewer?.available && localFile(viewer.path);
+  if (!path) return;
+  const action = select('viewer-primary');
+  action.href = path;
+  action.textContent = `${viewer.label} ↗`;
+  action.hidden = false;
+  select('viewer-description').textContent = viewer.description;
+  select('viewer-description').hidden = false;
+}
+
+function renderReferences(references = []) {
+  references.forEach((reference) => {
+    const path = localFile(reference.path);
+    if (!path) return;
+    const link = element('a', 'text-link', `${reference.label} ↗`);
+    link.href = path; link.target = '_blank'; link.rel = 'noopener';
+    select('reference-list').append(link);
+  });
+  select('references').hidden = select('reference-list').childElementCount === 0;
+}
+
 function renderProject(data) {
   const model = element('span', 'model-name', data.id);
   const name = element('span', 'model-name', data.title.replace(data.id, '').trim());
@@ -112,6 +134,8 @@ function renderProject(data) {
   select('project-status').classList.toggle('ready', data.productionReleased === true);
   if (data.releaseNote) select('release-note').textContent = data.releaseNote;
   (data.releaseConditions || []).forEach((condition) => select('release-conditions').append(element('li', '', condition)));
+  renderViewer(data.viewer);
+  renderReferences(data.references);
   renderDimensions(data.dimensions);
   const ready = data.files.filter((file) => file.available && localFile(file.path)).length;
   select('file-count').textContent = `${ready} / ${data.files.length} 份文件可下载`;

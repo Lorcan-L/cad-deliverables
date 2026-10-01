@@ -1,0 +1,2246 @@
+{
+  "project": "HW73005-L2000",
+  "revision": "R03",
+  "checked_on": "2026-10-01",
+  "status": "R03电气导航与设计装配版；到货、首件、认证和通电验收未放行",
+  "decisions": [
+    "两桌面排插连同A05承托盒固定在钢架；木桌面仅保留翻盖、毛刷和小护口，拆木桌面不带走供电器件。",
+    "五个终端并联：桌面三位五孔+3USB两组、桌肚八位排插两组、明装安全五孔一只。",
+    "四只原装排插分别插入X1~X4独立固定插座；第五支路为X5安全插座；禁止排插互插、剪掉原装插头。",
+    "新增桌底可达X0 C14入口，配原装国标10A/C13、3×1.5mm²成品电源线；取消R01前左腿内穿电源，成品线沿腿外侧可拆线夹固定。",
+    "中央仅安装端子分线盒，常规DIN总保护器不塞入70mm浅盒；上游保护作为现场供电边界，尚未视为已安装。",
+    "移桌或拆木桌面前拔一只总进线P0并确认无电；用户设备和穿孔线另行移走。"
+  ],
+  "source_requirements": {
+    "desktop_outlets": {
+      "quantity": 2,
+      "ac_five_hole_per_unit": 3,
+      "usb_ports_per_unit": 3
+    },
+    "underdesk_outlets": {
+      "quantity": 2,
+      "ac_five_hole_per_unit": 8
+    },
+    "fixed_safety_outlet": {
+      "quantity": 1,
+      "ac_five_hole_per_unit": 1
+    },
+    "field_wiring_cross_section_mm2": 1.5,
+    "metal_conduit_original_minimum_mm": 25,
+    "unknowns": [
+      "实际用户设备输入电流、同时使用系数和浪涌",
+      "建筑供电电压及上游允许电流/保护型式/短路电流",
+      "各成品到货完整CCC证书及实物外形、端子标识",
+      "安装后的电气试验结果"
+    ]
+  },
+  "topology": {
+    "supply_boundary": "现场单相L/N/PE电源 → 经核定的过流/剩余电流保护QF0 → 现场10A接地插座 → 原装成品线P0/C13 → 桌底X0 C14 → JB1",
+    "main_disconnect": "拔P0的国标插头或X0处C13，插头始终由检修者控制；QF0断开后仍须拔下总插头，不能仅凭排插开关判定无电。",
+    "live": "X0:L → XL0；XL0~XL5用厂家六连桥同电位连接；XL1~XL5分别送X1~X5:L",
+    "neutral": "X0:N → XN0；XN0~XN5用独立六连桥同电位连接；XN1~XN5分别送X1~X5:N；不得与PE连桥",
+    "protective_earth": "X0:PE → XPE0；XPE0~XPE6通过专用PE端子及已接地DIN导轨共同连接；XPE1~5送X1~5:PE，XPE6送桌身主接地螺柱PE0。",
+    "frame_bonding": "S01/S02、刀形腿、S04和S05为焊接固定金属组；四S08横梁为漆面螺接，各自用专用PE跨接。XPE6先到X1200梁的PE0，PE0跨到固定焊接金属组；其余三梁和两门分别跨到该金属组，逐点测PE连续性。中央盖/载板另有两根独立PE回PE0，涂层、铰链及结构螺栓不作为唯一导电路径。",
+    "branch_order": [
+      "X1→E01左桌面排插原插头",
+      "X2→E01右桌面排插原插头",
+      "X3→E02前检修门排插原插头",
+      "X4→E02后检修门排插原插头",
+      "X5→E03明装安全五孔"
+    ],
+    "pe_switching": "PE不经过开关、熔断器或QF0的L/N主触点；本桌无N-PE跨接。"
+  },
+  "power_budget": {
+    "design_interface_ceiling_A": 10,
+    "rated_total_W": null,
+    "actual_supply_V": null,
+    "available_total_A": null,
+    "rule": "I1+I2+I3+I4+I5 ≤ I_allow；I_allow取上游允许值、P0/X0及最弱器件额定值、线缆敷设条件允许值和保护整定的最小值，且不得超过10A接口上限。",
+    "branch_A": {
+      "X1": null,
+      "X2": null,
+      "X3": null,
+      "X4": null,
+      "X5": null
+    },
+    "release": "逐台读取设备铭牌，包含USB电源AC输入电流，记录各支路与同时使用总电流后才填写预算；不得把每排插2500W标称值相加成整桌功率。",
+    "protection_requirement": "供电回路必须具备与10A接口/1.5mm²线束匹配的过流保护和适合电子负载的剩余电流保护；本方案候选为Type A、30mA、≤10A，分断能力/曲线/选择性由现场短路和上游条件核定。"
+  },
+  "layout_mm": {
+    "coordinates": "与R02整桌统一：X沿2000长边，Y沿1200宽边，Z自地面；仅已核的外壳轮廓按实尺寸，排插符号仅代表安装区。",
+    "JB1": {
+      "box": "Hammond 1557HA2GY",
+      "bounds": [
+        900,
+        500,
+        800,
+        1100,
+        700,
+        870
+      ],
+      "size": [
+        200,
+        200,
+        70
+      ],
+      "lid_direction": "向下",
+      "mount": "240×300×T2可下放检修板，参考板界X880..1120/Y450..750/Z872..874；实际吊挂详结构S10。",
+      "mounting_screws": "盒原配安装脚向Y伸展；支承板按厂家外脚到货模板配孔，不虚构盒孔距。",
+      "service_window": [
+        850,
+        430,
+        1150,
+        770
+      ],
+      "outer_connection_allowance": "左右侧接头各突出≤30；箱+接头X包络≤260，仍可穿300宽窗；线缆弯曲与松弛另计。",
+      "lowering": "载板实际下放175.45，盖板183；2条独立防坠线承重。电缆/PE额外维护余量初设≥250，按厂家最小弯曲半径和完整运动轨迹首件核定；不得以电缆/PE承重。"
+    },
+    "X0": {
+      "location": [
+        280,
+        430,
+        782
+      ],
+      "direction": "插口朝下、桌底直接可达",
+      "required_local_enclosure": "原厂RC320-03（3-125-663）后罩，适配6100-3；主体31.2×23.5×51，出线口内径8.5，外颈径11.5。",
+      "mounting_cutout": "SCHURTER 6100.3300正面安装：28(+0.2/0)×20(+0.2/0)，角R≤3；2×φ3.5/M3孔，孔距40±0.2；以厂家最终图样为准",
+      "cutout_bounds": [
+        266,
+        420,
+        294,
+        440
+      ],
+      "fixing_holes": [
+        [
+          260,
+          430,
+          3.5
+        ],
+        [
+          300,
+          430,
+          3.5
+        ]
+      ],
+      "cover_bounds": [
+        264.4,
+        418.25,
+        782,
+        295.6,
+        441.75,
+        834
+      ],
+      "flange_bounds": [
+        256,
+        418.5,
+        777,
+        304,
+        441.5,
+        782
+      ],
+      "wire_termination": "L/N/PE各1只TE735278全绝缘母快接，6.35×0.81，适1~1.5mm²，导体绝缘径≤3.3；按本体L/N/接地标识，不从视图猜端脚顺序。",
+      "strain_relief": "入口后W00另设独立机械线夹夹护套；硅胶后罩及快接端不承担抗拉。",
+      "bend_control": "W00护套外径≤8.5，厂家允许静态最小弯曲半径≤30；罩顶Z834至木底Z882余48，弯线外包不得超Z882。满足这些尺寸的到货线材才可采用；活动检修段另按厂家弯曲条件核定。",
+      "cover_body_bounds": [
+        264.4,
+        418.25,
+        783,
+        295.6,
+        441.75,
+        834
+      ]
+    },
+    "X1": {
+      "location": [
+        690,
+        455,
+        835
+      ],
+      "served": "左A05盒",
+      "outlet_bounds_pending": true
+    },
+    "X2": {
+      "location": [
+        1310,
+        455,
+        835
+      ],
+      "served": "右A05盒",
+      "outlet_bounds_pending": true
+    },
+    "X3": {
+      "location": [
+        700,
+        270,
+        835
+      ],
+      "served": "前检修门E02",
+      "outlet_bounds_pending": true,
+      "installation_note": "仅固定插座安装区中心，最终绝缘支架按本体+原插头+排插启闭外包微调；避锁舌和八点工具柱，不据符号配孔。"
+    },
+    "X4": {
+      "location": [
+        700,
+        930,
+        835
+      ],
+      "served": "后检修门E02",
+      "outlet_bounds_pending": true,
+      "installation_note": "仅固定插座安装区中心，最终绝缘支架按本体+原插头+排插启闭外包微调；避锁舌和八点工具柱，不据符号配孔。"
+    },
+    "X5": {
+      "location": [
+        280,
+        550,
+        835
+      ],
+      "served": "明装安全五孔",
+      "outlet_bounds_pending": true
+    },
+    "PE0": {
+      "location": [
+        1180,
+        760,
+        835
+      ],
+      "hardware": "专用接地螺柱、接地标识、压接环形端子、齿形垫及防松紧固；不兼作结构固定",
+      "installation_note": "X1200横梁左腹面 X1180，Y760/Z835；柱向中央-X突出，避Y650..700抱角及Y720..740悬臂。"
+    },
+    "structural_constraints": {
+      "beams_X": [
+        400,
+        800,
+        1200,
+        1600
+      ],
+      "beam_width_X": 40,
+      "beam_Z": [
+        798,
+        848
+      ],
+      "over_beam_Z": [
+        848,
+        882
+      ],
+      "cover_clearance": "管外径≤25才可在34高梁上通道通过；源≥25名义管径不代表外径25，必须核实到货外径。",
+      "C_channel_Y": [
+        [
+          355,
+          385
+        ],
+        [
+          815,
+          845
+        ]
+      ],
+      "cross_C_rule": "W3/W4分别经过已批准的φ20腹板孔，装匹配护口后仅穿护套线；护管不得强穿φ20，不绕近乎无净空的C筋端部。",
+      "A05_boxes": [
+        [
+          435,
+          485,
+          786,
+          765,
+          715,
+          882
+        ],
+        [
+          1235,
+          485,
+          786,
+          1565,
+          715,
+          882
+        ]
+      ],
+      "doors": [
+        [
+          500,
+          180,
+          1500,
+          340
+        ],
+        [
+          500,
+          860,
+          1500,
+          1020
+        ]
+      ],
+      "C_channel_projection_X": [
+        28.5,
+        1971.5
+      ],
+      "C_channel_web_Y": [
+        [
+          355,
+          357
+        ],
+        [
+          843,
+          845
+        ]
+      ],
+      "approved_wire_holes": [
+        {
+          "part": "近侧S05",
+          "center": [
+            1000,
+            356,
+            842
+          ],
+          "diameter": 20,
+          "axis": "Y"
+        },
+        {
+          "part": "远侧S05",
+          "center": [
+            1000,
+            844,
+            842
+          ],
+          "diameter": 20,
+          "axis": "Y"
+        }
+      ],
+      "lock_centers": [
+        [
+          1000,
+          317.4
+        ],
+        [
+          1000,
+          882.6
+        ]
+      ],
+      "desktop_tool_columns": {
+        "x": [
+          580,
+          850,
+          1150,
+          1420
+        ],
+        "y": [
+          328,
+          872
+        ],
+        "diameter": 12
+      },
+      "beam_Y": [
+        361,
+        839
+      ],
+      "C_channel_Z": [
+        783,
+        880
+      ],
+      "C_channel_lip_height": 13,
+      "C_channel_open_Z": [
+        796,
+        867
+      ],
+      "C_channel_top_wood_gap": 2
+    },
+    "wire_routes_mm": {
+      "W00": [
+        [
+          280,
+          430,
+          782
+        ],
+        [
+          280,
+          430,
+          834
+        ],
+        [
+          310,
+          430,
+          865
+        ],
+        [
+          850,
+          430,
+          865
+        ],
+        [
+          850,
+          520,
+          865
+        ],
+        [
+          900,
+          520,
+          840
+        ]
+      ],
+      "W1": [
+        [
+          900,
+          560,
+          840
+        ],
+        [
+          850,
+          560,
+          865
+        ],
+        [
+          850,
+          455,
+          865
+        ],
+        [
+          720,
+          455,
+          865
+        ],
+        [
+          690,
+          455,
+          835
+        ]
+      ],
+      "W2": [
+        [
+          1100,
+          520,
+          840
+        ],
+        [
+          1150,
+          520,
+          865
+        ],
+        [
+          1150,
+          455,
+          865
+        ],
+        [
+          1280,
+          455,
+          865
+        ],
+        [
+          1310,
+          455,
+          835
+        ]
+      ],
+      "W3": [
+        [
+          900,
+          600,
+          840
+        ],
+        [
+          850,
+          600,
+          865
+        ],
+        [
+          850,
+          405,
+          865
+        ],
+        [
+          1000,
+          405,
+          865
+        ],
+        [
+          1000,
+          385,
+          842
+        ],
+        [
+          1000,
+          356,
+          842
+        ],
+        [
+          1000,
+          300,
+          835
+        ],
+        [
+          700,
+          300,
+          835
+        ],
+        [
+          700,
+          270,
+          835
+        ]
+      ],
+      "W4": [
+        [
+          1100,
+          640,
+          840
+        ],
+        [
+          1150,
+          640,
+          865
+        ],
+        [
+          1150,
+          795,
+          865
+        ],
+        [
+          1000,
+          795,
+          865
+        ],
+        [
+          1000,
+          815,
+          842
+        ],
+        [
+          1000,
+          844,
+          842
+        ],
+        [
+          1000,
+          900,
+          835
+        ],
+        [
+          700,
+          900,
+          835
+        ],
+        [
+          700,
+          930,
+          835
+        ]
+      ],
+      "W5": [
+        [
+          1100,
+          680,
+          840
+        ],
+        [
+          1160,
+          680,
+          865
+        ],
+        [
+          1160,
+          430,
+          865
+        ],
+        [
+          280,
+          430,
+          865
+        ],
+        [
+          280,
+          550,
+          865
+        ],
+        [
+          280,
+          550,
+          835
+        ]
+      ],
+      "PE6": [
+        [
+          1100,
+          600,
+          840
+        ],
+        [
+          1140,
+          600,
+          840
+        ],
+        [
+          1140,
+          760,
+          835
+        ],
+        [
+          1180,
+          760,
+          835
+        ]
+      ]
+    },
+    "route_status": "路径为支承和维护余量设计线，不是线材领料长度；线夹、管弯头和插接包络须到货/首件闭合。W3/W4过C护口段只有成品护套软线。",
+    "door_outlet_acceptance_bounds": [
+      [
+        1050,
+        215,
+        783.5,
+        1450,
+        315,
+        870
+      ],
+      [
+        1050,
+        885,
+        783.5,
+        1450,
+        985,
+        870
+      ]
+    ],
+    "door_outlet_acceptance_note": "每门排插连同固定器、原装线弯曲及用户插头总验收包络400×100×86.5；顶≤Z870，距木底882留12。不代表GN-604厂家外形；到货整套尺对、实插并启闭验证。",
+    "central_PE": {
+      "wire_quantity": 2,
+      "conductor": "2.5mm²黄绿柔性铜线",
+      "length_each_mm": null,
+      "fixed_point": [
+        1180,
+        760,
+        835
+      ],
+      "moving_points": {
+        "S10A": [
+          1000,
+          450,
+          782
+        ],
+        "S10B": [
+          1000,
+          460,
+          874
+        ]
+      },
+      "terminations": "每根移动端JST FV2-4，固定端FV2-5；各2只。移动端M4×10专用螺钉/平垫/齿形垫/防松螺母各2套，螺纹向上。",
+      "fixed_stud": "专用M5 PE0预留两只中央环端独立可靠夹持空间；其他件用E16专用分配，不向短柱任意叠加环端。",
+      "movement": "载板下放175.45，盖板183；额外维护余量初设≥250。运动所需直线增量≤183，因此250对直线增量尚余67；这不代替弯曲半径、线夹和全轨迹实物核验。",
+      "not_double_counted": "E21~E24专列，E16不再计中央两线/四环端/两M4套件；PE不兼防坠。"
+    },
+    "door_PE_points": {
+      "near": [
+        1000,
+        250,
+        783.5
+      ],
+      "far": [
+        1000,
+        950,
+        783.5
+      ],
+      "manufacturing_local": [
+        497.4,
+        67.4
+      ],
+      "hole_diameter": 4.5,
+      "note": "两门制造同件，旋转180°后全局X保持1000；单孔，PE不兼铰链。"
+    },
+    "fixed_PE_points": {
+      "beam_studs": [
+        [
+          380,
+          760,
+          835
+        ],
+        [
+          780,
+          760,
+          835
+        ],
+        [
+          1180,
+          760,
+          835
+        ],
+        [
+          1580,
+          760,
+          835
+        ]
+      ],
+      "frame_studs": [
+        [
+          380,
+          843,
+          835
+        ],
+        [
+          780,
+          843,
+          835
+        ],
+        [
+          1180,
+          843,
+          835
+        ],
+        [
+          1580,
+          843,
+          835
+        ],
+        [
+          1020,
+          357,
+          815
+        ],
+        [
+          1020,
+          843,
+          815
+        ]
+      ],
+      "directions": "四梁左腹面柱朝-X；远C四主跨接固定柱朝-Y；近/远门固定柱朝中央+Y/-Y。",
+      "welded_group": "S01/S02、腿、S04、S05均焊装为同一固定金属组；新增S08梁须跨接，不靠螺接漆面。"
+    }
+  },
+  "wire_and_termination": {
+    "W0": "原装国标10A/C13模压成品电源线，3×1.5mm²，长度按现场；不可剪改接头。",
+    "W00": "X0至JB1，RVV 3×1.5mm²铜芯护套软线，L棕/N蓝/PE黄绿。",
+    "W1_to_W5": "JB1至各固定插座，分别3×1.5mm²铜芯护套软线；两端永久套号；长度待实测，不填0。",
+    "factory_cords": "X1~X4之后为排插原装线和原装插头，其截面/认证按厂牌，不剪改为本图1.5mm²。",
+    "PE_bonding": "独立黄绿铜芯软线，截面由成套厂按保护与机械条件核定，不小于该支路PE导体；活动门使用适合反复弯曲的成品接地跨接线。",
+    "terminal_process": "选用WAGO 2002端子时按厂家剥线10~12mm及适配1.5mm²端头压接工艺；每夹持点一根导线，不做锡浸软线后再压接。R02以选定端子厂家工艺替换R01笼统涮锡。",
+    "insulation": "黄腊管或热缩管仅作附加保护，不代替成品护套、端子绝缘外壳、管口护口和应力释放。",
+    "X0_detail": "L/N/PE各1只TE735278全绝缘母快接，6.35×0.81，适1~1.5mm²，导体绝缘径≤3.3；按本体L/N/接地标识，不从视图猜端脚顺序。；入口后W00另设独立机械线夹夹护套；硅胶后罩及快接端不承担抗拉。",
+    "W00_bend": "W00护套外径≤8.5，厂家允许静态最小弯曲半径≤30；罩顶Z834至木底Z882余48，弯线外包不得超Z882。满足这些尺寸的到货线材才可采用；活动检修段另按厂家弯曲条件核定。",
+    "central_PE": "每根移动端JST FV2-4，固定端FV2-5；各2只。移动端M4×10专用螺钉/平垫/齿形垫/防松螺母各2套，螺纹向上。"
+  },
+  "terminal_table": [
+    {
+      "terminal": "XL0",
+      "from": "X0:L",
+      "net": "L",
+      "to": "XL1..XL5",
+      "bridge": "2002-406一根，仅桥接6只灰色L端子"
+    },
+    {
+      "terminal": "XN0",
+      "from": "X0:N",
+      "net": "N",
+      "to": "XN1..XN5",
+      "bridge": "2002-406另一根，仅桥接6只蓝色N端子"
+    },
+    {
+      "terminal": "XPE0",
+      "from": "X0:PE",
+      "net": "PE",
+      "to": "XPE1..XPE6",
+      "bridge": "PE端子专用接地脚→连续已接地DIN轨；不得桥到N"
+    },
+    {
+      "terminal": "XL1/XN1/XPE1",
+      "from": "JB1三母线",
+      "net": "L/N/PE",
+      "to": "X1:L/N/PE",
+      "wire": "W1 / 3×1.5mm²"
+    },
+    {
+      "terminal": "XL2/XN2/XPE2",
+      "from": "JB1三母线",
+      "net": "L/N/PE",
+      "to": "X2:L/N/PE",
+      "wire": "W2 / 3×1.5mm²"
+    },
+    {
+      "terminal": "XL3/XN3/XPE3",
+      "from": "JB1三母线",
+      "net": "L/N/PE",
+      "to": "X3:L/N/PE",
+      "wire": "W3 / 3×1.5mm²"
+    },
+    {
+      "terminal": "XL4/XN4/XPE4",
+      "from": "JB1三母线",
+      "net": "L/N/PE",
+      "to": "X4:L/N/PE",
+      "wire": "W4 / 3×1.5mm²"
+    },
+    {
+      "terminal": "XL5/XN5/XPE5",
+      "from": "JB1三母线",
+      "net": "L/N/PE",
+      "to": "X5:L/N/PE",
+      "wire": "W5 / 3×1.5mm²"
+    },
+    {
+      "terminal": "XPE6",
+      "from": "PE母线",
+      "net": "PE",
+      "to": "桌身PE0→各金属件",
+      "wire": "黄绿保护连接，单独标识，截面按成套保护核定"
+    }
+  ],
+  "products": [
+    {
+      "id": "E01",
+      "quantity": 2,
+      "model": "公牛UU3653（候选）",
+      "confirmed": "厂家官网：3个五孔AC，1USB-A+2USB-C，USB最大输出65W",
+      "not_confirmed": "AC额定值、到货外包、原装线规格、同时插3只用户插头时翻盖净空；若样板要求3个USB-A，本型号不等同，仍须换配",
+      "official_url": "https://www.gongniu.cn/show-186-625-1.html",
+      "status": "端口数量符合3USB概念；非3USB-A；机电外包待核"
+    },
+    {
+      "id": "E02",
+      "quantity": 2,
+      "model": "公牛GN-604（候选）",
+      "confirmed": "厂家官网8位，最大10A，250V，过载保护，3m/5m原装线",
+      "not_confirmed": "本体外包、固定器、绕线余量及门启闭干涉",
+      "official_url": "https://www.gongniu.cn/show-24-814-1.html",
+      "status": "孔位数与接口额定可核，外形待实物"
+    },
+    {
+      "id": "E03",
+      "quantity": 1,
+      "model": "正泰NEW1-C11100A（采购候选）",
+      "confirmed": "可检索到明装五孔销售型号",
+      "not_confirmed": "未取得完整厂家安装图、接线端子图与到货CCC证书；不锁定孔距和外包",
+      "purchase_url": "https://www.ehsy.com/product-CYV274",
+      "status": "仅采购候选，不以商城文案作电气安装证据"
+    },
+    {
+      "id": "E07",
+      "quantity": 1,
+      "model": "Hammond1557HA2GY箱体＋1557HPL内板各1",
+      "confirmed": "箱体外包200×200×70；另购1557HPL原厂内板，工程图外182×182、T2.05、4φ4孔距170；网页187规格概略不作加工依据。",
+      "not_confirmed": "R03内板操作面Z862为安装设计；原盒内柱高度/紧固件和内盖真实净距首件核；改孔后不宣称IP68。",
+      "official_url": "https://www.hammfg.com/part/1557HA2GY",
+      "installation_url": "https://www.hammfg.com/files/products/1557/wall-mount-foot-installipt.pdf?v=1697662067",
+      "purchase_url": "https://twen.rs-online.com/web/p/pcb-mounting-enclosures/1974346",
+      "status": "主选，裸盒外包已核",
+      "unit": "套",
+      "official_urls": [
+        "https://www.hammfg.com/part/1557HA2GY",
+        "https://www.hammfg.com/part/1557HPL",
+        "https://www.hammfg.com/files/parts/pdf/1557HPL.pdf"
+      ],
+      "purchase_urls": [
+        "https://twen.rs-online.com/web/p/pcb-mounting-enclosures/1974346",
+        "https://www.mouser.com/en/ProductDetail/Hammond-Manufacturing/1557HPL?qs=7D1LtPJG0i0ihGkjW47i8w%3D%3D"
+      ],
+      "kit": [
+        {
+          "name": "Hammond1557HA2GY箱体",
+          "quantity": 1,
+          "unit": "只",
+          "note": "200×200×70；含厂家原装外脚配置按到货复核",
+          "manufacturer_part": "1557HA2GY",
+          "official_url": "https://www.hammfg.com/part/1557HA2GY",
+          "purchase_url": "https://twen.rs-online.com/web/p/pcb-mounting-enclosures/1974346"
+        },
+        {
+          "name": "Hammond1557HPL内板",
+          "quantity": 1,
+          "unit": "块",
+          "note": "独立订购，非默认随箱；182×182×2.05，孔距170",
+          "manufacturer_part": "1557HPL",
+          "official_url": "https://www.hammfg.com/part/1557HPL",
+          "purchase_url": "https://www.mouser.com/en/ProductDetail/Hammond-Manufacturing/1557HPL?qs=7D1LtPJG0i0ihGkjW47i8w%3D%3D",
+          "drawing_url": "https://www.hammfg.com/files/parts/pdf/1557HPL.pdf",
+          "technical_url": "https://www.hammfg.com/files/parts/pdf/1557HPL.pdf"
+        }
+      ]
+    },
+    {
+      "id": "E08",
+      "quantity": 4,
+      "model": "公牛GN-N1110或同级带保护门单插座（候选）",
+      "confirmed": "厂家GN-N1110为自接线10A/250V、1+1插口、防拉脱，原装插头可插入",
+      "not_confirmed": "固定安装方法、外包和完整CCC/接线说明；到货后用绝缘固定支架，无厂家许可不得钻穿壳体",
+      "official_url": "https://www.gongniu.cn/show-213-967-1.html",
+      "status": "X1~X4隐藏分支插座；不得用四位排插替代星形固定分线"
+    },
+    {
+      "id": "E09",
+      "quantity": 1,
+      "model": "SCHURTER6100.3300 C14电源入口",
+      "confirmed": "C14，IEC10A/250V，6.3×0.8快接，螺钉固定，原厂含尺寸图",
+      "not_confirmed": "中国适用认证和到货同版外形；后罩另列E18、快接E19、紧固E20。",
+      "official_url": "https://www.schurter.com/de/datasheet/6100-3",
+      "drawing_url": "https://www.schurter.com/en/pdf/english/typ_6100-3.pdf",
+      "status": "X0安装接口候选，禁止按UL15A当中国10A接口升级"
+    },
+    {
+      "id": "E10",
+      "quantity": 1,
+      "model": "百格/亿晟PSB-10W—C13-10W成品线，订3×1.5mm²",
+      "confirmed": "厂家列国标双头线、10A/250V、3×0.75~1.5、长度可定",
+      "not_confirmed": "选定1.5版本的完整CCC证书和绝缘外径；网购成品替代可核广昌兴PCC311331D51003，但商城参数不替代厂家证书",
+      "official_url": "https://www.ibiger.com/Products/sxwwst.html",
+      "purchase_url": "https://item.jd.com/product/vUDomLiQGLyNsxPIm4fmTA.html",
+      "status": "主选3×1.5完整成品；SCHURTER6051.2032虽CCC但3×1.0不符合本项目线径，已排除"
+    },
+    {
+      "id": "E11",
+      "quantity": 6,
+      "model": "WAGO2002-1201",
+      "confirmed": "灰色2.5mm²导轨直通端子，单电位，适用DIN35×7.5",
+      "official_url": "https://www.wago.com/global/rail-mount-terminal-blocks/2-conductor-through-terminal-block/p/2002-1201",
+      "status": "XL0~5；端子与电流/导线厂家数据复核后实施",
+      "dimensional_evidence": "2002-1201/1204：宽5.2，跨轨48.5，自轨顶32.9，全深39.5；2002-1207：宽5.2，跨轨50.8，自轨顶32.9，背部卡脚未知不画。",
+      "body_orientation": "轨中Y600；厂家首图至+Y端L/N19.9、PE22.2，另一侧28.6；操作面朝-Z。"
+    },
+    {
+      "id": "E12",
+      "quantity": 6,
+      "model": "WAGO2002-1204",
+      "confirmed": "蓝色2.5mm²导轨直通端子，单电位，适用DIN35×7.5",
+      "official_url": "https://www.wago.com/gb/rail-mount-terminal-blocks/2-conductor-through-terminal-block/p/2002-1204",
+      "status": "XN0~5；与L分隔、不同色",
+      "dimensional_evidence": "2002-1201/1204：宽5.2，跨轨48.5，自轨顶32.9，全深39.5；2002-1207：宽5.2，跨轨50.8，自轨顶32.9，背部卡脚未知不画。",
+      "body_orientation": "轨中Y600；厂家首图至+Y端L/N19.9、PE22.2，另一侧28.6；操作面朝-Z。"
+    },
+    {
+      "id": "E13",
+      "quantity": 7,
+      "model": "WAGO2002-1207",
+      "confirmed": "黄绿2.5mm²专用PE端子，适用DIN35×7.5",
+      "official_url": "https://www.wago.com/de/reihenklemmen/2-leiter-schutzleiterklemme/p/2002-1207",
+      "status": "XPE0~6；连续导轨、接地脚与PE0导通须验证",
+      "dimensional_evidence": "2002-1201/1204：宽5.2，跨轨48.5，自轨顶32.9，全深39.5；2002-1207：宽5.2，跨轨50.8，自轨顶32.9，背部卡脚未知不画。",
+      "body_orientation": "轨中Y600；厂家首图至+Y端L/N19.9、PE22.2，另一侧28.6；操作面朝-Z。"
+    },
+    {
+      "id": "E14",
+      "quantity": 2,
+      "model": "WAGO2002-406",
+      "confirmed": "6位连续跨接桥，厂家2002系列配套",
+      "official_url": "https://www.wago.com/gb/rail-mount-terminal-blocks/jumper/p/2002-406",
+      "status": "L/N各一根；严禁错购/020-000三对独立桥"
+    },
+    {
+      "id": "QF0",
+      "quantity": null,
+      "model": "施耐德A9D32610（外部保护候选）",
+      "confirmed": "官方10A、1P+N、C曲线、6kA、30mA、TypeA；可隔离L/N",
+      "official_url": "https://www.se.com/in/en/product/A9D32610/acti-9-idpn-n-vigi-rcbo-1p%2Bn-10a-c-curve-6000a-30ma-type-a/",
+      "not_confirmed": "本地适用认证、曲线/分断能力/上游选择性及外部箱体；某市场已替代，不锁定采购",
+      "status": "现场边界内候选，不计已装件、不假定现场已具备"
+    },
+    {
+      "id": "E18",
+      "quantity": 1,
+      "model": "SCHURTER RC320-03，3-125-663",
+      "confirmed": "原厂列适配6100-3；尺寸31.2×23.5×51，出线口内径8.5、外颈径11.5。",
+      "official_url": "https://www.schurter.com/en/datasheet/RC320",
+      "drawing_url": "https://www.schurter.com/en/datasheet/typ_RC320.pdf",
+      "purchase_url": "https://eu.mouser.com/en/ProductDetail/Schurter/3-125-663?qs=7D1LtPJG0i0StJU2LYjKow%3D%3D",
+      "status": "主选原厂后罩；销售页支持订购但未称现货，安装全罩合与线径首件核定",
+      "installation_geometry": "RC320-03本体51高，安装Z783..834；旧Z782..834高52是含S04板厚1的安装包络，不是厂家本体高。"
+    },
+    {
+      "id": "E19",
+      "quantity": 3,
+      "model": "TE Connectivity735278",
+      "confirmed": "全绝缘母快接6.35×0.81，适1~1.5mm²，直型长21.6，导体绝缘径≤3.3，尼龙绝缘。",
+      "official_url": "https://www.te.com/en/product-735278.html",
+      "drawing_url": "https://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocFormat=pdf&DocLang=English&DocNm=735278&DocType=Customer+Drawing&PartCntxt=735278",
+      "purchase_url": "https://www.digikey.com/en/products/detail/te-connectivity-amp-connectors/735278/2054388",
+      "status": "L/N/PE各1只；厂家配套工具压接及拉脱验收"
+    },
+    {
+      "id": "E20",
+      "quantity": 2,
+      "model": "M3×8沉头螺钉、平垫、防松螺母",
+      "confirmed": "按SCHURTER6100.3300厂家2×φ3.5固定孔及沉孔配置。",
+      "official_url": "https://www.schurter.com/en/pdf/english/typ_6100-3.pdf",
+      "status": "两套入口固定件；实际叠厚和尾端突出量首件核定，不作PE连接"
+    },
+    {
+      "id": "E21",
+      "quantity": 2,
+      "model": "黄绿柔性铜芯PE线2.5mm²",
+      "confirmed": "S10A与S10B各1条独立回固定钢架；截面为R02设计值，长度待实测。",
+      "length_each_mm": null,
+      "status": "活动线材按厂家允许弯曲条件选配；250维护余量不当作总领料长度"
+    },
+    {
+      "id": "E22",
+      "quantity": 2,
+      "model": "JST FV2-4",
+      "confirmed": "M4环端，厂家适线1.04~2.63mm²；匹配2.5mm²移动端。",
+      "official_url": "https://www.jst-mfg.com/product/pdf/eng/eRING2.pdf",
+      "purchase_url": "https://cz.mouser.com/ProductDetail/JST-Commercial/FV2-4?qs=cIziFXvMxOUAUZffk7L1Xw%3D%3D",
+      "status": "两根中央PE各1只；依厂家工具压接"
+    },
+    {
+      "id": "E23",
+      "quantity": 2,
+      "model": "JST FV2-5",
+      "confirmed": "M5环端，厂家适线1.04~2.63mm²；匹配2.5mm²固定端。",
+      "official_url": "https://www.jst-mfg.com/product/pdf/eng/eRING2.pdf",
+      "status": "两根中央PE各1只；PE0预留两环端可靠夹持空间，禁止无限叠端"
+    },
+    {
+      "id": "E24",
+      "quantity": 2,
+      "model": "M4×10螺钉、平垫、齿形垫、防松螺母",
+      "confirmed": "配S10A孔(1000,450)、S10B孔(1000,460)，两孔φ4.5为R02结构接口。",
+      "status": "每移动组件1套，螺纹向上；去漆、防松并测连续性，PE不兼吊线"
+    },
+    {
+      "id": "E06",
+      "quantity": 1,
+      "model": "永久线号、绝缘套管配套",
+      "confirmed": "W00/W1~W5两端线号、L/N/PE颜色与端子号；按实测裁切热缩或黄腊管，只作附加绝缘。",
+      "status": "数量按接线点配足，不重复采购E11~E14端子或跨接桥；实际套管内径按导体和端头外包确定"
+    },
+    {
+      "id": "E15",
+      "quantity": 1,
+      "model": "WAGO210-112导轨、249-116端挡2只、2002-1291端/隔板3只",
+      "confirmed": "DIN35×7.5长150；19端子宽98.8＋端挡2×6＋隔板3×0.8＝113.2，轨两端各余18.4；箱内排序见terminalLayout。 定型210-112为35×7.5、T1、EN60715；采购2m一支截150，腰宽/R/槽孔模板仍按厂家实物。",
+      "official_urls": [
+        "https://www.wago.com/gb/accessories/screwless-end-stop/p/249-116",
+        "https://www.wago.com/us/rail-chassis-terminal-blocks/topjobs-end-intermediate-plate/p/2002-1291",
+        "https://www.wago.com/global/accessories/steel-carrier-rail/p/210-112"
+      ],
+      "status": "端挡2、L/N/PE每组闭合侧各1板；导轨须连续并与PE端子可靠连接；不把端挡当接地件",
+      "kit": [
+        {
+          "name": "WAGO210-112导轨",
+          "quantity": 1,
+          "unit": "支",
+          "stock_length_mm": 2000,
+          "installed_length_mm": 150,
+          "installed_quantity": 1,
+          "thickness_mm": 1,
+          "note": "原装2m购1支，截150一段装盒，余料留存；成品35×7.5/T1",
+          "manufacturer_part": "210-112",
+          "official_url": "https://www.wago.com/global/accessories/steel-carrier-rail/p/210-112",
+          "purchase_url": null,
+          "procurement_status": "已核原厂型号页；未核直达销售页或库存，采购询价确认"
+        },
+        {
+          "name": "WAGO249-116端挡",
+          "quantity": 2,
+          "unit": "只",
+          "nominal_width_mm": 6,
+          "manufacturer_part": "249-116",
+          "official_url": "https://www.wago.com/gb/accessories/screwless-end-stop/p/249-116",
+          "purchase_url": null,
+          "procurement_status": "已核原厂型号页；未核直达销售页或库存，采购询价确认"
+        },
+        {
+          "name": "WAGO2002-1291端/隔板",
+          "quantity": 3,
+          "unit": "只",
+          "nominal_width_mm": 0.8,
+          "manufacturer_part": "2002-1291",
+          "official_url": "https://www.wago.com/us/rail-chassis-terminal-blocks/topjobs-end-intermediate-plate/p/2002-1291",
+          "purchase_url": null,
+          "procurement_status": "已核原厂型号页；未核直达销售页或库存，采购询价确认"
+        }
+      ]
+    },
+    {
+      "id": "E16",
+      "quantity": 1,
+      "model": "固定钢组/三梁/两门7条黄绿2.5mm²跨接与端头紧固包",
+      "confirmed": "7条线分别为XPE6→PE0、PE0→焊接主框架、其余3根螺接梁→主框架、两活动门→主框架；JST FV2-5 11只、FV2-4 2只，WAGO侧1端用Phoenix3202533（AI2.5-10BU）冷压套管，不另算环端。",
+      "official_url": "https://www.jst-mfg.com/product/pdf/eng/eRING2.pdf",
+      "status": "线长待实测；10柱及指定叠层已落钢图，焊接保持力/防松/PE连续性首件核验；与中央E21~E24去重。",
+      "kit": [
+        {
+          "name": "2.5mm²黄绿铜软线",
+          "quantity": 7,
+          "unit": "条",
+          "length_each_mm": null
+        },
+        {
+          "name": "JST FV2-5",
+          "quantity": 11,
+          "unit": "只"
+        },
+        {
+          "name": "JST FV2-4",
+          "quantity": 2,
+          "unit": "只"
+        },
+        {
+          "name": "门PE M4×10/平垫/齿垫/防松螺母",
+          "quantity": 2,
+          "unit": "套"
+        },
+        {
+          "name": "Phoenix AI2.5-10BU / 3202533",
+          "quantity": 1,
+          "unit": "只",
+          "note": "接XPE6，金属夹持段10；线材剥线按端头/端子联合说明，不浸锡"
+        },
+        {
+          "name": "ISO13918 PT M5×20钢4.8镀铜焊柱",
+          "manufacturer_part": "ATS015 1105020",
+          "alternative": "Vital Parts WELD13918-M5-20-COP，同标准须核焊接适用性",
+          "quantity": 10,
+          "unit": "只"
+        },
+        {
+          "name": "DIN6797A M5外齿垫",
+          "manufacturer_part": "Würth04310215",
+          "quantity": 10,
+          "unit": "只",
+          "size_mm": "内5.3/外10/未压高1.2/料厚0.6"
+        },
+        {
+          "name": "ISO7089 M5平垫",
+          "manufacturer_part": "Würth46418185",
+          "quantity": 10,
+          "unit": "只",
+          "size_mm": "内5.3/外10/厚1.0"
+        },
+        {
+          "name": "DIN985 M5防松螺母",
+          "manufacturer_part": "Würth03975",
+          "quantity": 10,
+          "unit": "只",
+          "size_mm": "高5.0/对边8"
+        }
+      ],
+      "official_urls": [
+        "https://www.jst-mfg.com/product/pdf/eng/eRING2.pdf",
+        "https://www.atslamberti.com/files/00364/weldingstudsa.t.srev.2of17042024.pdf",
+        "https://www.phoenixcontact.com/en-us/products/ferrule-ai-25-10-bu-3202533",
+        "https://eshop.wuerth.de/Zahnscheibe-aussengezahnt-Form-A-DIN-6797-Edelstahl-A2-SHB-ZA-DIN6797-A2-A-D53/04310215.sku/de/DE/EUR/",
+        "https://eshop.wuerth.de/Hexagon-nut-low-profile-with-clamping-piece-non-metal-insert-DIN-985-A4-stainless-steel-plain-NUT-HEX-SLOK-DIN985-A4-WS8-M5/03975.sku/en/US/EUR/",
+        "https://marketplacemedia.witglobal.net/source/marketplace/stmedia/wuerth/documents/documents/std.lang.all/642388974.pdf"
+      ],
+      "purchase_url": "https://www.vital-parts.co.uk/male-threaded-weld-studs-iso-13918-type-pt/29898-weld13918-m5-20-cop",
+      "stud_stack": {
+        "stud": "M5×20，P0.8，凸缘φ6.5±0.2、高0.7~1.4；厂商焊后长度约19.7。",
+        "minimum_usable_full_thread_above_flange_mm": 18,
+        "PE0_lugs": 4,
+        "PE0_uncompressed_stack_mm": 10.4,
+        "PE0_stack": "1.2齿垫+4×0.8环端+1.0平垫+5.0锁母；凸缘高度另计。",
+        "single_lug_stack_mm": 8.0,
+        "remaining_thread_from_18mm_mm": 7.6,
+        "minimum_tail_thread_mm": 1.6,
+        "control": "齿垫/环端坐凸缘；涂层避让电气接触面。M5锁母完整啮合且露≥2P，按厂家压接/焊接工艺首件验证。四环端出线错开不叠绝缘套，不加第五环；剩余7.6只为尺寸算术，不作为电气合格证。"
+      }
+    }
+  ],
+  "maintenance": [
+    "停止所有负载，断开现场供电保护，拔总进线P0并由检修者控制插头；挂牌防误送电。",
+    "用适用测试器确认X0下游无电，并验证测试器前后有效；等待各成品电源按厂家规定完成放电。",
+    "开对应检修门；中央先确认两防坠线，再卸防脱螺钉；载板下放175.45；盖索孔心距183、锚点垂降181.227，确认线缆和PE不受拉。",
+    "记录端子号再维修；更换排插整件拔原装插头，禁止带电插拔端子、拆PE或剪改原装线。",
+    "回装检查应力释放、保护接地连续性、端子夹持/极性、绝缘、门启闭和松弛量；保护试验合格后再送电。",
+    "拆木桌面时先完成前述断电并移走用户设备/穿孔线；A05和排插留钢架，桌面机械固定点按A08拆装。"
+  ],
+  "release_checks": [
+    "上游供电与保护/短路条件确认",
+    "成品CCC和型号实物一致",
+    "五支路电流预算与同时使用负载记录",
+    "外包和用户插头实插净空/门启闭",
+    "PE连续性、极性、绝缘和保护动作检验",
+    "主插头可达、中央盒下放防坠/弯曲/应力释放试装",
+    "各接线端子按厂家扭矩或弹簧夹接线检查并记录"
+  ],
+  "procurement_gaps": {
+    "official_outer_bounds_pending": [
+      "UU3653",
+      "GN-604",
+      "GN-N1110",
+      "NEW1-C11100A"
+    ],
+    "certificates_pending": [
+      "桌面与桌肚排插到货CCC",
+      "GN-N1110接线及固定使用说明",
+      "NEW1-C11100A厂家安装/接线图与CCC",
+      "6100.3300中国适用认证",
+      "PSB-10W/C13-10W 3×1.5版CCC"
+    ],
+    "accessory_skus_pending": [
+      "固定插座绝缘支架",
+      "盒出线应力释放接头",
+      "两C腹板φ20/T2配套护口",
+      "腿外成品线夹型号"
+    ],
+    "hardware_coordination": "H05两组GN-604固定器和H06两只W04A φ50护口由hardware清单统一；E17包含R02腿外进线和C护口，不再计R01 H08腿内出线。"
+  },
+  "pe_wire_schedule": [
+    {
+      "id": "PE6",
+      "from": "XPE6",
+      "to": "PE0(1180,760,835)",
+      "termination": "Phoenix3202533压接套管→FV2-5",
+      "cross_section_mm2": 2.5,
+      "length_mm": null,
+      "quantity": 1
+    },
+    {
+      "id": "PE-F",
+      "from": "PE0(1180,760,835)",
+      "to": "主框架(1180,843,835)",
+      "termination": "FV2-5→FV2-5",
+      "cross_section_mm2": 2.5,
+      "length_mm": null,
+      "quantity": 1
+    },
+    {
+      "id": "PE-B400",
+      "from": "横梁(380,760,835)",
+      "to": "主框架(380,843,835)",
+      "termination": "FV2-5→FV2-5",
+      "cross_section_mm2": 2.5,
+      "length_mm": null,
+      "quantity": 1
+    },
+    {
+      "id": "PE-B800",
+      "from": "横梁(780,760,835)",
+      "to": "主框架(780,843,835)",
+      "termination": "FV2-5→FV2-5",
+      "cross_section_mm2": 2.5,
+      "length_mm": null,
+      "quantity": 1
+    },
+    {
+      "id": "PE-B1600",
+      "from": "横梁(1580,760,835)",
+      "to": "主框架(1580,843,835)",
+      "termination": "FV2-5→FV2-5",
+      "cross_section_mm2": 2.5,
+      "length_mm": null,
+      "quantity": 1
+    },
+    {
+      "id": "PE-D1",
+      "from": "近门(1000,250,783.5)",
+      "to": "主框架(1020,357,815)",
+      "termination": "FV2-4→FV2-5",
+      "cross_section_mm2": 2.5,
+      "length_mm": null,
+      "quantity": 1
+    },
+    {
+      "id": "PE-D2",
+      "from": "远门(1000,950,783.5)",
+      "to": "主框架(1020,843,815)",
+      "termination": "FV2-4→FV2-5",
+      "cross_section_mm2": 2.5,
+      "length_mm": null,
+      "quantity": 1
+    }
+  ],
+  "derived_from": {
+    "path": "work/r02/electrical_design.json",
+    "sha256": "b11a5d9d7be8e4e4dccb45d81c19184bf69013a0640446b9c36bcdac9b46f33e"
+  },
+  "terminalLayout": {
+    "devices": [
+      {
+        "id": "JB1-PANEL",
+        "partId": "E07",
+        "name": "原厂内板",
+        "bbox": [
+          909,
+          509,
+          862,
+          1091,
+          691,
+          864.05
+        ],
+        "center": [
+          1000.0,
+          600.0,
+          863.025
+        ],
+        "size": [
+          182,
+          182,
+          2.0499999999999545
+        ],
+        "model": "1557HPL",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "manufacturer_envelope",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核"
+      },
+      {
+        "id": "DIN1",
+        "partId": "E15",
+        "name": "150导轨",
+        "bbox": [
+          925,
+          582.5,
+          854.5,
+          1075,
+          617.5,
+          862
+        ],
+        "center": [
+          1000.0,
+          600.0,
+          858.25
+        ],
+        "size": [
+          150,
+          35.0,
+          7.5
+        ],
+        "model": "WAGO210-112",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "manufacturer_envelope",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "mountingPlane": 862,
+        "thickness": 1,
+        "sourceSize": "35×7.5、T1，购2m截150；腰宽/折弯R未知，不将包络绘成实心材料"
+      },
+      {
+        "id": "XL0",
+        "partId": "E11",
+        "name": "XL0接线端子",
+        "bbox": [
+          949.4,
+          571.4,
+          821.6,
+          954.6,
+          619.9,
+          861.1
+        ],
+        "center": [
+          952.0,
+          595.65,
+          841.35
+        ],
+        "size": [
+          5.2000000000000455,
+          48.5,
+          39.5
+        ],
+        "model": "2002-1201",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "manufacturer_envelope",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "net": "L",
+        "sourceDimension": "宽5.2×跨轨48.5；轨顶至外面32.9",
+        "totalDepthStatus": "原厂总深39.5",
+        "railDatumY": 600,
+        "dimensionEvidence": "厂家首图轨中至+Y端：L/N19.9、PE22.2；另一侧28.6"
+      },
+      {
+        "id": "XL1",
+        "partId": "E11",
+        "name": "XL1接线端子",
+        "bbox": [
+          954.6,
+          571.4,
+          821.6,
+          959.8,
+          619.9,
+          861.1
+        ],
+        "center": [
+          957.2,
+          595.65,
+          841.35
+        ],
+        "size": [
+          5.199999999999932,
+          48.5,
+          39.5
+        ],
+        "model": "2002-1201",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "manufacturer_envelope",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "net": "L",
+        "sourceDimension": "宽5.2×跨轨48.5；轨顶至外面32.9",
+        "totalDepthStatus": "原厂总深39.5",
+        "railDatumY": 600,
+        "dimensionEvidence": "厂家首图轨中至+Y端：L/N19.9、PE22.2；另一侧28.6"
+      },
+      {
+        "id": "XL2",
+        "partId": "E11",
+        "name": "XL2接线端子",
+        "bbox": [
+          959.8,
+          571.4,
+          821.6,
+          965.0,
+          619.9,
+          861.1
+        ],
+        "center": [
+          962.4,
+          595.65,
+          841.35
+        ],
+        "size": [
+          5.2000000000000455,
+          48.5,
+          39.5
+        ],
+        "model": "2002-1201",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "manufacturer_envelope",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "net": "L",
+        "sourceDimension": "宽5.2×跨轨48.5；轨顶至外面32.9",
+        "totalDepthStatus": "原厂总深39.5",
+        "railDatumY": 600,
+        "dimensionEvidence": "厂家首图轨中至+Y端：L/N19.9、PE22.2；另一侧28.6"
+      },
+      {
+        "id": "XL3",
+        "partId": "E11",
+        "name": "XL3接线端子",
+        "bbox": [
+          965.0,
+          571.4,
+          821.6,
+          970.2,
+          619.9,
+          861.1
+        ],
+        "center": [
+          967.6,
+          595.65,
+          841.35
+        ],
+        "size": [
+          5.2000000000000455,
+          48.5,
+          39.5
+        ],
+        "model": "2002-1201",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "manufacturer_envelope",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "net": "L",
+        "sourceDimension": "宽5.2×跨轨48.5；轨顶至外面32.9",
+        "totalDepthStatus": "原厂总深39.5",
+        "railDatumY": 600,
+        "dimensionEvidence": "厂家首图轨中至+Y端：L/N19.9、PE22.2；另一侧28.6"
+      },
+      {
+        "id": "XL4",
+        "partId": "E11",
+        "name": "XL4接线端子",
+        "bbox": [
+          970.2,
+          571.4,
+          821.6,
+          975.4,
+          619.9,
+          861.1
+        ],
+        "center": [
+          972.8,
+          595.65,
+          841.35
+        ],
+        "size": [
+          5.199999999999932,
+          48.5,
+          39.5
+        ],
+        "model": "2002-1201",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "manufacturer_envelope",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "net": "L",
+        "sourceDimension": "宽5.2×跨轨48.5；轨顶至外面32.9",
+        "totalDepthStatus": "原厂总深39.5",
+        "railDatumY": 600,
+        "dimensionEvidence": "厂家首图轨中至+Y端：L/N19.9、PE22.2；另一侧28.6"
+      },
+      {
+        "id": "XL5",
+        "partId": "E11",
+        "name": "XL5接线端子",
+        "bbox": [
+          975.4,
+          571.4,
+          821.6,
+          980.6,
+          619.9,
+          861.1
+        ],
+        "center": [
+          978.0,
+          595.65,
+          841.35
+        ],
+        "size": [
+          5.2000000000000455,
+          48.5,
+          39.5
+        ],
+        "model": "2002-1201",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "manufacturer_envelope",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "net": "L",
+        "sourceDimension": "宽5.2×跨轨48.5；轨顶至外面32.9",
+        "totalDepthStatus": "原厂总深39.5",
+        "railDatumY": 600,
+        "dimensionEvidence": "厂家首图轨中至+Y端：L/N19.9、PE22.2；另一侧28.6"
+      },
+      {
+        "id": "SEP-XL",
+        "partId": "E15",
+        "name": "XL端板",
+        "bbox": null,
+        "center": null,
+        "size": null,
+        "model": "2002-1291",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "width_known",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "designCenter": [
+          981.0,
+          600,
+          841.35
+        ],
+        "nominalWidth": 0.8,
+        "axialSpan": [
+          980.6,
+          981.4
+        ],
+        "profileStatus": "未作厂家轮廓建模"
+      },
+      {
+        "id": "XN0",
+        "partId": "E12",
+        "name": "XN0接线端子",
+        "bbox": [
+          981.4,
+          571.4,
+          821.6,
+          986.6,
+          619.9,
+          861.1
+        ],
+        "center": [
+          984.0,
+          595.65,
+          841.35
+        ],
+        "size": [
+          5.2000000000000455,
+          48.5,
+          39.5
+        ],
+        "model": "2002-1204",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "manufacturer_envelope",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "net": "N",
+        "sourceDimension": "宽5.2×跨轨48.5；轨顶至外面32.9",
+        "totalDepthStatus": "原厂总深39.5",
+        "railDatumY": 600,
+        "dimensionEvidence": "厂家首图轨中至+Y端：L/N19.9、PE22.2；另一侧28.6"
+      },
+      {
+        "id": "XN1",
+        "partId": "E12",
+        "name": "XN1接线端子",
+        "bbox": [
+          986.6,
+          571.4,
+          821.6,
+          991.8,
+          619.9,
+          861.1
+        ],
+        "center": [
+          989.2,
+          595.65,
+          841.35
+        ],
+        "size": [
+          5.199999999999932,
+          48.5,
+          39.5
+        ],
+        "model": "2002-1204",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "manufacturer_envelope",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "net": "N",
+        "sourceDimension": "宽5.2×跨轨48.5；轨顶至外面32.9",
+        "totalDepthStatus": "原厂总深39.5",
+        "railDatumY": 600,
+        "dimensionEvidence": "厂家首图轨中至+Y端：L/N19.9、PE22.2；另一侧28.6"
+      },
+      {
+        "id": "XN2",
+        "partId": "E12",
+        "name": "XN2接线端子",
+        "bbox": [
+          991.8,
+          571.4,
+          821.6,
+          997.0,
+          619.9,
+          861.1
+        ],
+        "center": [
+          994.4,
+          595.65,
+          841.35
+        ],
+        "size": [
+          5.2000000000000455,
+          48.5,
+          39.5
+        ],
+        "model": "2002-1204",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "manufacturer_envelope",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "net": "N",
+        "sourceDimension": "宽5.2×跨轨48.5；轨顶至外面32.9",
+        "totalDepthStatus": "原厂总深39.5",
+        "railDatumY": 600,
+        "dimensionEvidence": "厂家首图轨中至+Y端：L/N19.9、PE22.2；另一侧28.6"
+      },
+      {
+        "id": "XN3",
+        "partId": "E12",
+        "name": "XN3接线端子",
+        "bbox": [
+          997.0,
+          571.4,
+          821.6,
+          1002.2,
+          619.9,
+          861.1
+        ],
+        "center": [
+          999.6,
+          595.65,
+          841.35
+        ],
+        "size": [
+          5.2000000000000455,
+          48.5,
+          39.5
+        ],
+        "model": "2002-1204",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "manufacturer_envelope",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "net": "N",
+        "sourceDimension": "宽5.2×跨轨48.5；轨顶至外面32.9",
+        "totalDepthStatus": "原厂总深39.5",
+        "railDatumY": 600,
+        "dimensionEvidence": "厂家首图轨中至+Y端：L/N19.9、PE22.2；另一侧28.6"
+      },
+      {
+        "id": "XN4",
+        "partId": "E12",
+        "name": "XN4接线端子",
+        "bbox": [
+          1002.2,
+          571.4,
+          821.6,
+          1007.4,
+          619.9,
+          861.1
+        ],
+        "center": [
+          1004.8,
+          595.65,
+          841.35
+        ],
+        "size": [
+          5.199999999999932,
+          48.5,
+          39.5
+        ],
+        "model": "2002-1204",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "manufacturer_envelope",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "net": "N",
+        "sourceDimension": "宽5.2×跨轨48.5；轨顶至外面32.9",
+        "totalDepthStatus": "原厂总深39.5",
+        "railDatumY": 600,
+        "dimensionEvidence": "厂家首图轨中至+Y端：L/N19.9、PE22.2；另一侧28.6"
+      },
+      {
+        "id": "XN5",
+        "partId": "E12",
+        "name": "XN5接线端子",
+        "bbox": [
+          1007.4,
+          571.4,
+          821.6,
+          1012.6,
+          619.9,
+          861.1
+        ],
+        "center": [
+          1010.0,
+          595.65,
+          841.35
+        ],
+        "size": [
+          5.2000000000000455,
+          48.5,
+          39.5
+        ],
+        "model": "2002-1204",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "manufacturer_envelope",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "net": "N",
+        "sourceDimension": "宽5.2×跨轨48.5；轨顶至外面32.9",
+        "totalDepthStatus": "原厂总深39.5",
+        "railDatumY": 600,
+        "dimensionEvidence": "厂家首图轨中至+Y端：L/N19.9、PE22.2；另一侧28.6"
+      },
+      {
+        "id": "SEP-XN",
+        "partId": "E15",
+        "name": "XN端板",
+        "bbox": null,
+        "center": null,
+        "size": null,
+        "model": "2002-1291",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "width_known",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "designCenter": [
+          1013.0,
+          600,
+          841.35
+        ],
+        "nominalWidth": 0.8,
+        "axialSpan": [
+          1012.6,
+          1013.4
+        ],
+        "profileStatus": "未作厂家轮廓建模"
+      },
+      {
+        "id": "XPE0",
+        "partId": "E13",
+        "name": "XPE0接线端子",
+        "bbox": [
+          1013.4,
+          571.4,
+          821.6,
+          1018.6,
+          622.1999999999999,
+          854.5
+        ],
+        "center": [
+          1016.0,
+          596.8,
+          838.05
+        ],
+        "size": [
+          5.2000000000000455,
+          50.799999999999955,
+          32.89999999999998
+        ],
+        "model": "2002-1207",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "manufacturer_partial_envelope",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "net": "PE",
+        "sourceDimension": "宽5.2×跨轨50.8；轨顶至外面32.9",
+        "totalDepthStatus": "仅轨外32.9；PE金属卡脚背部深度未知，不建模",
+        "railDatumY": 600,
+        "dimensionEvidence": "厂家首图轨中至+Y端：L/N19.9、PE22.2；另一侧28.6"
+      },
+      {
+        "id": "XPE1",
+        "partId": "E13",
+        "name": "XPE1接线端子",
+        "bbox": [
+          1018.6,
+          571.4,
+          821.6,
+          1023.8,
+          622.1999999999999,
+          854.5
+        ],
+        "center": [
+          1021.2,
+          596.8,
+          838.05
+        ],
+        "size": [
+          5.199999999999932,
+          50.799999999999955,
+          32.89999999999998
+        ],
+        "model": "2002-1207",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "manufacturer_partial_envelope",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "net": "PE",
+        "sourceDimension": "宽5.2×跨轨50.8；轨顶至外面32.9",
+        "totalDepthStatus": "仅轨外32.9；PE金属卡脚背部深度未知，不建模",
+        "railDatumY": 600,
+        "dimensionEvidence": "厂家首图轨中至+Y端：L/N19.9、PE22.2；另一侧28.6"
+      },
+      {
+        "id": "XPE2",
+        "partId": "E13",
+        "name": "XPE2接线端子",
+        "bbox": [
+          1023.8,
+          571.4,
+          821.6,
+          1029.0,
+          622.1999999999999,
+          854.5
+        ],
+        "center": [
+          1026.4,
+          596.8,
+          838.05
+        ],
+        "size": [
+          5.2000000000000455,
+          50.799999999999955,
+          32.89999999999998
+        ],
+        "model": "2002-1207",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "manufacturer_partial_envelope",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "net": "PE",
+        "sourceDimension": "宽5.2×跨轨50.8；轨顶至外面32.9",
+        "totalDepthStatus": "仅轨外32.9；PE金属卡脚背部深度未知，不建模",
+        "railDatumY": 600,
+        "dimensionEvidence": "厂家首图轨中至+Y端：L/N19.9、PE22.2；另一侧28.6"
+      },
+      {
+        "id": "XPE3",
+        "partId": "E13",
+        "name": "XPE3接线端子",
+        "bbox": [
+          1029.0,
+          571.4,
+          821.6,
+          1034.2,
+          622.1999999999999,
+          854.5
+        ],
+        "center": [
+          1031.6,
+          596.8,
+          838.05
+        ],
+        "size": [
+          5.2000000000000455,
+          50.799999999999955,
+          32.89999999999998
+        ],
+        "model": "2002-1207",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "manufacturer_partial_envelope",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "net": "PE",
+        "sourceDimension": "宽5.2×跨轨50.8；轨顶至外面32.9",
+        "totalDepthStatus": "仅轨外32.9；PE金属卡脚背部深度未知，不建模",
+        "railDatumY": 600,
+        "dimensionEvidence": "厂家首图轨中至+Y端：L/N19.9、PE22.2；另一侧28.6"
+      },
+      {
+        "id": "XPE4",
+        "partId": "E13",
+        "name": "XPE4接线端子",
+        "bbox": [
+          1034.2,
+          571.4,
+          821.6,
+          1039.4,
+          622.1999999999999,
+          854.5
+        ],
+        "center": [
+          1036.8000000000002,
+          596.8,
+          838.05
+        ],
+        "size": [
+          5.2000000000000455,
+          50.799999999999955,
+          32.89999999999998
+        ],
+        "model": "2002-1207",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "manufacturer_partial_envelope",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "net": "PE",
+        "sourceDimension": "宽5.2×跨轨50.8；轨顶至外面32.9",
+        "totalDepthStatus": "仅轨外32.9；PE金属卡脚背部深度未知，不建模",
+        "railDatumY": 600,
+        "dimensionEvidence": "厂家首图轨中至+Y端：L/N19.9、PE22.2；另一侧28.6"
+      },
+      {
+        "id": "XPE5",
+        "partId": "E13",
+        "name": "XPE5接线端子",
+        "bbox": [
+          1039.4,
+          571.4,
+          821.6,
+          1044.6,
+          622.1999999999999,
+          854.5
+        ],
+        "center": [
+          1042.0,
+          596.8,
+          838.05
+        ],
+        "size": [
+          5.199999999999818,
+          50.799999999999955,
+          32.89999999999998
+        ],
+        "model": "2002-1207",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "manufacturer_partial_envelope",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "net": "PE",
+        "sourceDimension": "宽5.2×跨轨50.8；轨顶至外面32.9",
+        "totalDepthStatus": "仅轨外32.9；PE金属卡脚背部深度未知，不建模",
+        "railDatumY": 600,
+        "dimensionEvidence": "厂家首图轨中至+Y端：L/N19.9、PE22.2；另一侧28.6"
+      },
+      {
+        "id": "XPE6",
+        "partId": "E13",
+        "name": "XPE6接线端子",
+        "bbox": [
+          1044.6,
+          571.4,
+          821.6,
+          1049.8,
+          622.1999999999999,
+          854.5
+        ],
+        "center": [
+          1047.1999999999998,
+          596.8,
+          838.05
+        ],
+        "size": [
+          5.2000000000000455,
+          50.799999999999955,
+          32.89999999999998
+        ],
+        "model": "2002-1207",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "manufacturer_partial_envelope",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "net": "PE",
+        "sourceDimension": "宽5.2×跨轨50.8；轨顶至外面32.9",
+        "totalDepthStatus": "仅轨外32.9；PE金属卡脚背部深度未知，不建模",
+        "railDatumY": 600,
+        "dimensionEvidence": "厂家首图轨中至+Y端：L/N19.9、PE22.2；另一侧28.6"
+      },
+      {
+        "id": "SEP-XPE",
+        "partId": "E15",
+        "name": "XPE端板",
+        "bbox": null,
+        "center": null,
+        "size": null,
+        "model": "2002-1291",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "width_known",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "designCenter": [
+          1050.2,
+          600,
+          841.35
+        ],
+        "nominalWidth": 0.8,
+        "axialSpan": [
+          1049.8,
+          1050.6
+        ],
+        "profileStatus": "未作厂家轮廓建模"
+      },
+      {
+        "id": "STOP-L",
+        "partId": "E15",
+        "name": "导轨端挡",
+        "bbox": null,
+        "center": null,
+        "size": null,
+        "model": "249-116",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "width_known",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "designCenter": [
+          946.4,
+          600,
+          841.35
+        ],
+        "nominalWidth": 6,
+        "axialSpan": [
+          943.4,
+          949.4
+        ],
+        "profileStatus": "未作厂家轮廓建模"
+      },
+      {
+        "id": "STOP-R",
+        "partId": "E15",
+        "name": "导轨端挡",
+        "bbox": null,
+        "center": null,
+        "size": null,
+        "model": "249-116",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "width_known",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "designCenter": [
+          1053.6,
+          600,
+          841.35
+        ],
+        "nominalWidth": 6,
+        "axialSpan": [
+          1050.6,
+          1056.6
+        ],
+        "profileStatus": "未作厂家轮廓建模"
+      },
+      {
+        "id": "BR-XL",
+        "partId": "E14",
+        "name": "XL六连桥",
+        "bbox": null,
+        "center": null,
+        "size": null,
+        "model": "2002-406",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "connection_only",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "points": [
+          [
+            952,
+            600,
+            821.6
+          ],
+          [
+            978,
+            600,
+            821.6
+          ]
+        ],
+        "quantity": 1,
+        "connects": [
+          "XL0",
+          "XL1",
+          "XL2",
+          "XL3",
+          "XL4",
+          "XL5"
+        ],
+        "profileStatus": "连接示意，实物桥轮廓待核"
+      },
+      {
+        "id": "BR-XN",
+        "partId": "E14",
+        "name": "XN六连桥",
+        "bbox": null,
+        "center": null,
+        "size": null,
+        "model": "2002-406",
+        "orientation": [
+          0,
+          0,
+          -1
+        ],
+        "geometryLevel": "connection_only",
+        "status": "成品尺寸已核；R03安装位置/内柱紧固首件核",
+        "points": [
+          [
+            984,
+            600,
+            821.6
+          ],
+          [
+            1010,
+            600,
+            821.6
+          ]
+        ],
+        "quantity": 1,
+        "connects": [
+          "XN0",
+          "XN1",
+          "XN2",
+          "XN3",
+          "XN4",
+          "XN5"
+        ],
+        "profileStatus": "连接示意，实物桥轮廓待核"
+      }
+    ],
+    "axis": "X",
+    "terminalCount": 19,
+    "occupiedLength": 113.2,
+    "railLength": 150,
+    "railEndAllowance": 18.4,
+    "plateMountingHoles": [
+      [
+        915,
+        515
+      ],
+      [
+        1085,
+        515
+      ],
+      [
+        1085,
+        685
+      ],
+      [
+        915,
+        685
+      ]
+    ],
+    "plateHoleDiameter": 4,
+    "installationDatumZ": 862,
+    "sources": [
+      "https://www.farnell.com/datasheets/4757860.pdf",
+      "https://images.salsify.com/image/upload/ayv4iaulyqdlxvv399id",
+      "https://elektra.lt/media/productattachment/w/a/wago_2002-1207.pdf",
+      "https://www.wago.com/global/accessories/steel-carrier-rail/p/210-112",
+      "https://www.hammfg.com/files/parts/pdf/1557HPL.pdf"
+    ],
+    "notes": [
+      "X由小到大：端挡→XL0..5→隔板→XN0..5→隔板→XPE0..6→隔板→端挡",
+      "板182×182×2.05，孔距170；不得以网页概略187作为制造尺寸",
+      "Z862为R03内板操作侧设计面；原盒柱高/紧固/内盖实际净距首件核",
+      "端子最外面Z821.6至盒外盖平面Z800为21.6，不是内盖净距",
+      "L/N沿Y571.4..619.9；PE沿Y571.4..622.2，源图轨中至端19.9/22.2，不作对称包络",
+      "轨上端子外包分级；不臆造底柱、卡口、夹线孔、跨桥轮廓"
+    ]
+  },
+  "r03_changes": [
+    "W03A近侧长板φ50两只替代W04A短端孔，K04/K05沿用稳定ID；板外100通道，插头及弯曲仍首件",
+    "箱内182方内板、150导轨、6L/6N/7PE可见实排；安装面Z862，未知内柱不建模",
+    "盖索孔心距183不等于盖下放行程；模型盖锚垂降181.227，载板175.45，按S10F全程验"
+  ],
+  "r03_route_source": "work/r03/electrical/routes.json"
+}

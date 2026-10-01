@@ -1,0 +1,17 @@
+<!doctype html>
+<!-- [INPUT]: 同版assembly/index/routes数据。[OUTPUT]: 可旋转、拆分和逐件定位的三维索引。[POS]: R03工人阅读入口。
+[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md -->
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>体验桌 R03 · 三维装配索引</title><link rel="stylesheet" href="viewer.css">
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/"}}</script></head>
+<body><header><a id="home-link" href="../../../">← 交付资料</a><h1>体验桌 <small>R03 · 装配索引</small></h1><a id="pdf-link" target="_blank" rel="noopener">打开图册 ↗</a></header>
+<main><aside><div class="search"><label for="search">按件号或名称找部件</label><input id="search" placeholder="例如：S08 横梁、H03 合页"></div>
+<div class="tabs"><button class="active" data-tab="parts">部件</button><button data-tab="holes">孔与线路</button></div>
+<div id="parts-panel"><p id="part-count" class="muted"></p><div id="part-list"></div></div>
+<div id="holes-panel" hidden><p class="muted">选择孔号，查看所在零件、孔径和路线。</p><div id="hole-list"></div><h2>线束路线</h2><div id="route-list"></div></div></aside>
+<section class="stage"><div class="toolbar"><label>装配层 <select id="preset"><option value="all">整桌</option><option value="wood">桌面与翻盖</option><option value="frame">钢架与加强梁</option><option value="service">门盖与检修板</option><option value="electric">电器与走线</option></select></label><button id="reset">恢复整桌</button><button id="isolate" disabled>只看选中</button><button id="fit">居中</button></div>
+<div id="viewport" aria-label="三维装配视图"><div id="loading">正在载入同版三维模型…</div><div id="labels"></div><div class="gesture">拖动旋转 · 滚轮缩放 · 点击选件</div><div id="orientation">X 长边 · Y 短边 · Z 高度</div></div>
+<div class="bottom-controls"><label>分离部件 <input id="explode" type="range" min="0" max="100" value="0"><output id="explode-value">0%</output></label><label><input id="show-routes" type="checkbox">装配位置线路</label><label><input id="show-holes" type="checkbox">全部孔号</label></div>
+<div id="detail"><strong>先选一个部件或孔号</strong><p>三维图、图册和清单使用同一件号；选择后可直接跳到加工图。</p></div>
+<p class="boundary">颜色用于分组识别。三维供装配定位；加工尺寸以对应图纸为准。成型深化稿，未生产放行。</p></section></main>
+<script type="module" src="viewer.js"></script></body></html>

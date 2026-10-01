@@ -1,0 +1,134 @@
+{
+  "revision": "R03",
+  "date": "2026-10-02",
+  "pages": 52,
+  "parts": 84,
+  "instances": 449,
+  "holes": 38,
+  "pdfLinks": 245,
+  "pdfBookmarks": 52,
+  "visual": "52页分工目检；最后修改的A02/V04/V08已独立复核",
+  "guide": "8页逐页目检，无截断或溢出",
+  "browser": {
+    "url": "http://127.0.0.1:8735/viewer/",
+    "errors": [],
+    "steps": [
+      {
+        "action": "选择S08横梁总成",
+        "detail": "S08 · 可拆横梁焊接总成\n\n每桌 4 组　所属总成 A08\n\n图 S08 · P36 ↗\n\n由子件组成"
+      },
+      {
+        "action": "只看选中",
+        "text": "显示装配环境",
+        "unrelatedRoutesHidden": true
+      },
+      {
+        "action": "选择过线孔",
+        "detail": "K01 · C14入口切口 28×20 (+0.2/0)\n\n所在件 S04　穿过路线 W00\n\n设计孔位已确定\n\n图 S04 · P31 ↗\n图 E04 · P46 ↗"
+      },
+      {
+        "action": "选择W03A木盒出线孔",
+        "detail": "K04 · 木盒原装线孔 φ50\n\n所在件 W03A　穿过路线 U1\n\nR03近侧长板出线/原装插头与弯曲半径首件核\n\n图 W03 · P22 ↗\n图 E06 · P48 ↗\n\n板件局部孔心 165 / 51 mm",
+        "links": [
+          "http://127.0.0.1:8735/HW73005-L2000_R03.pdf#page=22",
+          "http://127.0.0.1:8735/HW73005-L2000_R03.pdf#page=48"
+        ]
+      },
+      {
+        "action": "选择W3经过C筋的线路",
+        "detail": "W3 · W3 过线/接线\n\nJB1 → X3　经过 K02、K12\n\n设计路径/接头与运动首件待核\n\n图 E01 · P43 ↗\n图 E05 · P47 ↗",
+        "links": [
+          "http://127.0.0.1:8735/HW73005-L2000_R03.pdf#page=43",
+          "http://127.0.0.1:8735/HW73005-L2000_R03.pdf#page=47"
+        ]
+      }
+    ],
+    "loaded": {
+      "ready": true,
+      "partCount": 84,
+      "meshCount": 449,
+      "holeCount": 38
+    },
+    "mapping": {
+      "checkedParts": 84,
+      "failures": [],
+      "present": 84
+    },
+    "desktop": {
+      "viewport": 1500,
+      "documentWidth": 1500,
+      "pdf": "http://127.0.0.1:8735/HW73005-L2000_R03.pdf"
+    },
+    "mobile": {
+      "viewport": 390,
+      "documentWidth": 390
+    },
+    "passed": true
+  },
+  "mobileViewport": {
+    "errors": [],
+    "sequence": [
+      "390x844",
+      "844x390",
+      "390x844",
+      "390x844分离100%"
+    ],
+    "visual": "root逐图目检：手机横屏、返回竖屏及100%分离均完整呈现模型边界，无裁切",
+    "passed": true,
+    "files": {
+      "viewer.js": "a9529d29c4a3402fc734b2e1de52fa304d584e56897949d86947eed9705d1fe1",
+      "viewer.css": "93bd56aaba57ac83c9c786f16a4b06d4fff8dcaa645ce8421320bb900519208a"
+    }
+  },
+  "spreadsheets": {
+    "checks": 1118,
+    "allPass": true,
+    "formulaCount": 193,
+    "nativeHyperlinks": 132,
+    "batch1to3to1": true
+  },
+  "cad2d": {
+    "passed": true,
+    "dwg_version": "AC1018",
+    "numeric_comparisons": 4613785,
+    "max_absolute_difference": 5.820766091346741e-11,
+    "audit_errors": 0,
+    "audit_fixes": 0,
+    "source_sha256": "1ecb7cc1d704b0231c79fecc53a85ddde8ea443834ae47516c7ffc3a79570884",
+    "dwg_sha256": "fe223813472f4b7f27cda9f5b8705b09776e930b5446dd3772bf2875ed855d75"
+  },
+  "cad3d": {
+    "passed": true,
+    "dwg_version": "AC1018",
+    "numeric_comparisons": 2886194,
+    "max_absolute_difference": 2.7755575615628914e-17,
+    "audit_errors": 0,
+    "audit_fixes": 0,
+    "source_sha256": "7534fc074a1bfcd042d89f6369a695ac6fa82308a58e0aa77a4f2705ce4a4bd2",
+    "dwg_sha256": "b3e24b2226b7f53d420e2369bf3097676116338b74c579e8e20d59c1131c5414"
+  },
+  "historyR02Unchanged": true,
+  "iterations": [
+    {
+      "round": 1,
+      "finding": "木盒和小件遮挡；原短侧出线孔仅余15；端子与紧固件表达不足",
+      "action": "重建逐件模型与件号索引，拆出总成、五金、电器定位图；记录实质缺陷"
+    },
+    {
+      "round": 2,
+      "finding": "木盒仍遮挡、路线过密、局部裁剪产生伪边、端子方向与标注不清",
+      "action": "新增V10木盒分解、3D裁剪、简化路线；迁孔到W03A，补全端子和PE；全册交叉审图"
+    },
+    {
+      "round": 3,
+      "finding": "A02隐藏目标、V04空白锚点、V08错误底视；后门固定器镜像及护口深度残差",
+      "action": "调整可见引线/底视/镜像/护口；回读两DWG、复核52图和84件跳转；修清单行高及手机横竖屏三维裁切"
+    }
+  ],
+  "limits": [
+    "未执行接收方CAD编辑验收",
+    "未执行工厂首件与电气实物验收",
+    "三维为定位网格和采购包络，不是参数化实体或钣金展开模型",
+    "待核孔和采购件接口以实物及原厂资料完成首件核定，不能按规划点直接钻孔"
+  ]
+}

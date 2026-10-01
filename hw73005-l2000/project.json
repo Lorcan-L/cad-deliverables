@@ -1,17 +1,17 @@
 {
   "id": "HW73005-L2000",
   "title": "HW73005-L2000 体验桌",
-  "version": "R02",
+  "version": "R03",
   "date": "2026-10-01",
   "status": "published",
-  "statusLabel": "R02 成型深化稿，未生产放行",
-  "summary": "37页成型深化图册、84项BOM记录。新增八点可拆桌面、四根横梁、中央下放检修位和五支路电气资料，并附成品五金与采购来源清单。",
+  "statusLabel": "R03 工人阅读版，未生产放行",
+  "summary": "52页图册与84项BOM记录。先看三维装配和件号索引，再打开对应制作图；孔位、安装方向和检修步骤按同一件号联查。",
   "dimensions": {
     "length": 2000,
     "width": 1200,
     "height": 900,
     "unit": "mm",
-    "note": "R02 成品控制尺寸。桌面T18；2000×1200×900。整桌面8点M6可拆，四根螺接横梁及三处检修口。"
+    "note": "成品控制2000×1200×900；桌面T18。整桌面8点M6可拆，四根螺接横梁及三处检修口。"
   },
   "quantities": [
     {
@@ -42,19 +42,19 @@
   ],
   "checks": [
     {
-      "label": "同版图纸与BOM",
+      "label": "同版图纸、三维与BOM",
       "status": "verified",
-      "detail": "37图页与84项BOM的件号、父级、图号、页码及三视引用检查通过。"
+      "detail": "52页、84件号、449个三维实例、38个孔位，以及BOM与双向图页索引同版核对通过。"
     },
     {
-      "label": "CAD数字校核",
+      "label": "二维与三维CAD数字校核",
       "status": "verified",
-      "detail": "DWG2004回读通过；37布局、202条原生尺寸及49,208项数值一致，最大差5.82×10⁻¹¹ mm。"
+      "detail": "两份DWG均为AC1018；二维212个原生尺寸与三维449实例回读通过，audit错误及修复均为0。"
     },
     {
-      "label": "PDF与两份XLSX",
+      "label": "三轮图面复核",
       "status": "verified",
-      "detail": "PDF37页逐页目检通过；BOM与采购表的数量、公式、来源链接和空白待核长度单独验证。"
+      "detail": "三轮修订完成；52页分工目检、重点修改页独立复审、84件号跳页和8页读图说明复核通过。"
     },
     {
       "label": "工厂首件与工艺",
@@ -76,97 +76,170 @@
     {
       "label": "整套交付包",
       "format": "ZIP",
-      "path": "files/R02/HW73005-L2000_R02_交付包.zip",
-      "description": "同版图纸、两份清单、说明与校验记录",
-      "available": true,
+      "path": "files/R03/HW73005-L2000_R03_交付包.zip",
+      "description": "同版二维、三维、两份清单、说明与校验记录",
       "primary": true,
-      "bytes": 11957972,
-      "sha256": "fc137d09f775c09034e8e42fba01d321bfa247820d72cc194e06a4b3bae54f6b"
+      "available": true,
+      "bytes": 52050449,
+      "sha256": "80505b2f6fc166ca0d2deec3451a4a8a57e546aff72c0414fd41b6c8b187c319"
     },
     {
-      "label": "CAD成型深化图",
+      "label": "二维制作图",
       "format": "DWG",
-      "path": "files/R02/HW73005-L2000_R02.dwg",
-      "description": "37布局与可编辑原生尺寸",
+      "path": "files/R03/HW73005-L2000_R03.dwg",
+      "description": "52布局，原生尺寸、孔表与图页索引",
       "available": true,
-      "bytes": 232645,
-      "sha256": "dd4e9fc50f071016af14e0fcb06ad594ebd26a02f523778aca86675a98c3ac8a"
+      "bytes": 9661516,
+      "sha256": "fe223813472f4b7f27cda9f5b8705b09776e930b5446dd3772bf2875ed855d75"
+    },
+    {
+      "label": "三维装配模型",
+      "format": "DWG",
+      "path": "files/R03/HW73005-L2000_R03_三维装配.dwg",
+      "description": "按件号分块的可编辑面模型与安装包络",
+      "available": true,
+      "bytes": 3521046,
+      "sha256": "b3e24b2226b7f53d420e2369bf3097676116338b74c579e8e20d59c1131c5414"
     },
     {
       "label": "图纸PDF",
       "format": "PDF",
-      "path": "files/R02/HW73005-L2000_R02.pdf",
-      "description": "37页图册，含结构、检修及电气接口",
-      "available": true,
+      "path": "files/R03/HW73005-L2000_R03.pdf",
+      "description": "52页图册，含三维、索引、制作及电气接口",
       "preview": true,
-      "pages": 37,
-      "bytes": 9405420,
-      "sha256": "17bb52700acea1e6ce7d9a37ad395caa754ac444c8529cf125213a2fde5ea67a"
+      "pages": 52,
+      "available": true,
+      "bytes": 33395172,
+      "sha256": "7bc784480c46256cec65b7f486c28aa00615876c5370b4720df312403a66a18b"
     },
     {
       "label": "零件BOM",
       "format": "XLSX",
-      "path": "files/R02/HW73005-L2000_R02_BOM.xlsx",
-      "description": "84项零件、装配及采购数量与图号",
+      "path": "files/R03/HW73005-L2000_R03_BOM.xlsx",
+      "description": "84项件号、装配关系、数量与图页",
       "available": true,
-      "bytes": 55876,
-      "sha256": "c8e76336ac63c87682a896bd756f974b44241f11244e1c6c3c8ee1c9414201c5"
+      "bytes": 57553,
+      "sha256": "5e7a2c9f10e6d63eb953c64fc382fcbb7c2fc09711f524ed04baaffbf0633efe"
     },
     {
       "label": "成品采购清单",
       "format": "XLSX",
-      "path": "files/R02/HW73005-L2000_R02_采购清单.xlsx",
-      "description": "具体型号、套件拆分、包装及121个来源链接",
+      "path": "files/R03/HW73005-L2000_R03_采购清单.xlsx",
+      "description": "具体型号、套件拆分、包装与来源链接",
       "available": true,
-      "bytes": 40294,
-      "sha256": "328ae6ec57b40d1d6b789231b88deee97245f8e57e5c24cd0ee4d410edaae4d0"
+      "bytes": 41915,
+      "sha256": "4f53b62f9350588590eff36d1676179d68d53056e2738d8d13e206171ad86dcf"
     },
     {
-      "label": "交付说明",
+      "label": "读图与工艺说明",
       "format": "PDF",
-      "path": "files/R02/HW73005-L2000_R02_交付说明.pdf",
-      "description": "制作、检修、采购范围及实物验收要求",
+      "path": "files/R03/HW73005-L2000_R03_读图与工艺说明.pdf",
+      "description": "当前版制作、检修、采购与实物验收要求",
       "available": true,
-      "bytes": 2597356,
-      "sha256": "0c8575f5a773b7f9bee6b6b465b1b32ffe6cfa6d5f2aa6244295c22c637d0db2"
+      "bytes": 254156,
+      "sha256": "a655a47ff4e4c66c302707738be830d949598f4d65ca7c54aba995a8e8bc0419"
     }
   ],
   "previewImages": [
     {
-      "path": "previews/R02/A01-page-01.png",
-      "label": "A01 · 整桌总装与三视",
-      "pdfPage": 1
+      "path": "previews/R03/A02-page-05.png",
+      "label": "A02 · 整桌分层装配",
+      "pdfPage": 5
     },
     {
-      "path": "previews/R02/A08-page-21.png",
-      "label": "A08 · 内部加强与检修通道",
-      "pdfPage": 21
+      "path": "previews/R03/V10-page-07.png",
+      "label": "V10 · 木盒出线与承托",
+      "pdfPage": 7
     },
     {
-      "path": "previews/R02/S10F-page-29.png",
-      "label": "S10F · 中央下放检修位",
-      "pdfPage": 29
+      "path": "previews/R03/V05-page-10.png",
+      "label": "V05 · 连接五金局部安装",
+      "pdfPage": 10
     },
     {
-      "path": "previews/R02/D01-page-30.png",
+      "path": "previews/R03/D01-page-15.png",
       "label": "D01 · 桌面拆装与工具通道",
-      "pdfPage": 30
+      "pdfPage": 15
     },
     {
-      "path": "previews/R02/E02-page-32.png",
-      "label": "E02 · 五支路电气原理",
-      "pdfPage": 32
+      "path": "previews/R03/E05-page-47.png",
+      "label": "E05 · 桌肚排插出线",
+      "pdfPage": 47
     }
   ],
   "productionReleased": false,
-  "releaseNote": "R02已补充可拆结构、检修路径和厂家成品接口；以下事项仍是生产放行前的实际验收条件。",
+  "releaseNote": "本版用三维装配、短注图面和双向索引帮助查图；以下事项仍须首件和实物验证。",
   "releaseConditions": [
     "工艺与结构：钣金展开补偿、焊接收缩、首件载荷、门盖全行程和M6木嵌件扭矩尚待核定。",
     "外购配装：五金、电器及固定器按具体型号到货；跨品牌护口、排插外包、胶粘抗滑脱和原装插头净空须首件验证。",
-    "电气与维护：R02进线改走腿外；必须完成接地、绝缘及保护检验，确认中央下放时线缆不受拉，防坠索与PE各自独立。"
+    "电气与维护：进线走腿外，木盒从近侧长板出线；完成接地、绝缘及保护检验，确认下放时线缆不受拉，防坠索与PE各自独立。"
   ],
-  "deliveryNote": "本页默认R02；历史R01供追溯。资料发布不代表生产放行，接收方CAD、工厂首件与电气实物检验状态按图纸和说明分别确认。",
+  "deliveryNote": "本页默认R03；R02和R01完整保留供追溯。资料发布不代表生产放行，接收方CAD、工厂首件与电气实物检验分别确认。",
   "history": [
+    {
+      "version": "R02",
+      "date": "2026-10-01",
+      "description": "37页图册、84项BOM。保留完整下载用于版本追溯；R03增加三维与双向索引，并调整木盒出线方向。",
+      "files": [
+        {
+          "label": "整套交付包",
+          "format": "ZIP",
+          "path": "files/R02/HW73005-L2000_R02_交付包.zip",
+          "description": "同版图纸、两份清单、说明与校验记录",
+          "available": true,
+          "primary": true,
+          "bytes": 11957972,
+          "sha256": "fc137d09f775c09034e8e42fba01d321bfa247820d72cc194e06a4b3bae54f6b"
+        },
+        {
+          "label": "CAD成型深化图",
+          "format": "DWG",
+          "path": "files/R02/HW73005-L2000_R02.dwg",
+          "description": "37布局与可编辑原生尺寸",
+          "available": true,
+          "bytes": 232645,
+          "sha256": "dd4e9fc50f071016af14e0fcb06ad594ebd26a02f523778aca86675a98c3ac8a"
+        },
+        {
+          "label": "图纸PDF",
+          "format": "PDF",
+          "path": "files/R02/HW73005-L2000_R02.pdf",
+          "description": "37页图册，含结构、检修及电气接口",
+          "available": true,
+          "preview": true,
+          "pages": 37,
+          "bytes": 9405420,
+          "sha256": "17bb52700acea1e6ce7d9a37ad395caa754ac444c8529cf125213a2fde5ea67a"
+        },
+        {
+          "label": "零件BOM",
+          "format": "XLSX",
+          "path": "files/R02/HW73005-L2000_R02_BOM.xlsx",
+          "description": "84项零件、装配及采购数量与图号",
+          "available": true,
+          "bytes": 55876,
+          "sha256": "c8e76336ac63c87682a896bd756f974b44241f11244e1c6c3c8ee1c9414201c5"
+        },
+        {
+          "label": "成品采购清单",
+          "format": "XLSX",
+          "path": "files/R02/HW73005-L2000_R02_采购清单.xlsx",
+          "description": "具体型号、套件拆分、包装及121个来源链接",
+          "available": true,
+          "bytes": 40294,
+          "sha256": "328ae6ec57b40d1d6b789231b88deee97245f8e57e5c24cd0ee4d410edaae4d0"
+        },
+        {
+          "label": "交付说明",
+          "format": "PDF",
+          "path": "files/R02/HW73005-L2000_R02_交付说明.pdf",
+          "description": "制作、检修、采购范围及实物验收要求",
+          "available": true,
+          "bytes": 2597356,
+          "sha256": "0c8575f5a773b7f9bee6b6b465b1b32ffe6cfa6d5f2aa6244295c22c637d0db2"
+        }
+      ]
+    },
     {
       "version": "R01",
       "date": "2026-10-01",
@@ -221,6 +294,38 @@
           "sha256": "4af6b62f78c4a3b4cc59930db3d7e164072b2f37befce32e218312b4956ea85f"
         }
       ]
+    }
+  ],
+  "viewer": {
+    "path": "files/R03/viewer/index.html",
+    "available": true,
+    "label": "打开三维装配查看器",
+    "description": "旋转、拆分、选件与孔位定位，直接跳到对应制作图。"
+  },
+  "references": [
+    {
+      "label": "三轮校验汇总",
+      "path": "files/R03/evidence/verification_summary.json",
+      "bytes": 4730,
+      "sha256": "65235d349bcb6cfbadfb07d3160641f2fc533d23db92a2732d1cdea1d01bc161"
+    },
+    {
+      "label": "五金型号与来源",
+      "path": "files/R03/evidence/hardware_sources.json",
+      "bytes": 31816,
+      "sha256": "f9564c27f5483dcddbcb27f9c8afba34ad1dcd64c04bdbc3fbf4d353462f1e7f"
+    },
+    {
+      "label": "电气设计与来源",
+      "path": "files/R03/evidence/electrical_design.json",
+      "bytes": 67187,
+      "sha256": "eb5e16f889a89a49449cdc476265e86c7fe866d6b757d5cf48a4a64c830a94e2"
+    },
+    {
+      "label": "交付文件SHA256",
+      "path": "files/R03/evidence/sha256.json",
+      "bytes": 2536,
+      "sha256": "d24a42d16c36a7c72359ff75155b7d90f2d2c8f35bdc6b8435bf9bbd490cd56d"
     }
   ]
 }
