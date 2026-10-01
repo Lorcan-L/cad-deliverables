@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 当前项目 project.json 的版本、生产放行条件、数量、文件与验证结果。
- * [OUTPUT]: 交付页内容、可用文件下载、完整 PDF 入口及可追溯图页缩略图。
+ * [OUTPUT]: 交付页内容、可用文件下载、完整 PDF 入口、历史版下载及可追溯图页缩略图。
  * [POS]: 静态展示控制层，内容通过 textContent 安全写入。
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
@@ -87,6 +87,19 @@ function renderPreviewImages(images = []) {
   select('preview-gallery').hidden = select('preview-gallery').childElementCount === 0;
 }
 
+function renderHistory(history = []) {
+  history.forEach((release) => {
+    const panel = element('details', 'history-release');
+    panel.append(element('summary', 'text-link', `${release.version} · ${release.date} · 展开历史下载`));
+    panel.append(element('p', 'muted', release.description));
+    const list = element('div', 'download-grid');
+    release.files.forEach((file) => list.append(downloadCard({ ...file, primary: false, label: `${release.version} · ${file.label}` })));
+    panel.append(list);
+    select('history-list').append(panel);
+  });
+  select('history').hidden = history.length === 0;
+}
+
 function renderProject(data) {
   const model = element('span', 'model-name', data.id);
   const name = element('span', 'model-name', data.title.replace(data.id, '').trim());
@@ -95,6 +108,7 @@ function renderProject(data) {
   select('project-version').textContent = data.version;
   select('project-date').textContent = `版本日期 ${data.date}`;
   select('project-status').textContent = data.statusLabel;
+  select('release-heading').textContent = data.statusLabel;
   select('project-status').classList.toggle('ready', data.productionReleased === true);
   if (data.releaseNote) select('release-note').textContent = data.releaseNote;
   (data.releaseConditions || []).forEach((condition) => select('release-conditions').append(element('li', '', condition)));
@@ -108,6 +122,7 @@ function renderProject(data) {
     select('quantity-list').append(row);
   });
   renderChecks(data.checks);
+  renderHistory(data.history);
   renderPreview(data.files);
   renderPreviewImages(data.previewImages);
   if (data.deliveryNote) select('delivery-note').textContent = data.deliveryNote;

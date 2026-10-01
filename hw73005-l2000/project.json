@@ -1,17 +1,17 @@
 {
   "id": "HW73005-L2000",
   "title": "HW73005-L2000 体验桌",
-  "version": "R01",
+  "version": "R02",
   "date": "2026-10-01",
   "status": "published",
-  "statusLabel": "R01 成型深化稿，未生产放行",
-  "summary": "25 页成型深化图册、42 项零件与采购记录，用于图纸核对、配作及首件准备。提供可编辑 CAD、PDF、四表 BOM 和复核说明。",
+  "statusLabel": "R02 成型深化稿，未生产放行",
+  "summary": "37页成型深化图册、84项BOM记录。新增八点可拆桌面、四根横梁、中央下放检修位和五支路电气资料，并附成品五金与采购来源清单。",
   "dimensions": {
     "length": 2000,
     "width": 1200,
     "height": 900,
     "unit": "mm",
-    "note": "R01 成品控制尺寸。桌面 T18，金属桌体 1990×1190；钢腿877 + 脚伸出5 + 桌面18 = 总高900。"
+    "note": "R02 成品控制尺寸。桌面T18；2000×1200×900。整桌面8点M6可拆，四根螺接横梁及三处检修口。"
   },
   "quantities": [
     {
@@ -42,114 +42,185 @@
   ],
   "checks": [
     {
-      "label": "图纸与清单对应",
+      "label": "同版图纸与BOM",
       "status": "verified",
-      "detail": "25 图页与 42 项记录的件号、父级、数量、图号及 PDF 页码一致。"
+      "detail": "37图页与84项BOM的件号、父级、图号、页码及三视引用检查通过。"
     },
     {
-      "label": "CAD 数字校核",
+      "label": "CAD数字校核",
       "status": "verified",
-      "detail": "DWG 2004 格式已回读；25 个图纸布局、144 条原生尺寸及 29,031 项数值对比通过。"
+      "detail": "DWG2004回读通过；37布局、202条原生尺寸及49,208项数值一致，最大差5.82×10⁻¹¹ mm。"
     },
     {
-      "label": "PDF 与 BOM 校核",
+      "label": "PDF与两份XLSX",
       "status": "verified",
-      "detail": "PDF 25 页已逐页目检；BOM 四表全部行完成排版检查，42 条数量公式通过。待核长度保留空白。"
+      "detail": "PDF37页逐页目检通过；BOM与采购表的数量、公式、来源链接和空白待核长度单独验证。"
     },
     {
-      "label": "工厂首件与工艺复核",
+      "label": "工厂首件与工艺",
       "status": "pending",
-      "detail": "折弯展开、腿端配切、焊接收缩及到货五金配作尚需实际首件确认。"
+      "detail": "折弯展开、焊接收缩、实际荷载、门盖全行程、脚调平及成品配装须首件验证。"
     },
     {
-      "label": "接收方 CAD 打开验收",
+      "label": "接收方CAD打开验收",
       "status": "pending",
-      "detail": "尚未在接收方实际 CAD 软件和版本中执行操作验收。"
+      "detail": "尚未在接收方实际CAD软件和版本中执行操作验收。"
     },
     {
-      "label": "实物结构与电气检验",
+      "label": "电气实物检验",
       "status": "pending",
-      "detail": "结构稳定性、脚调节、门盖启闭、线缆保护及电气检验尚待实物完成。"
+      "detail": "到货证书及外包、线路夹持、接地连续性、极性、绝缘与保护动作须实物检验。"
     }
   ],
   "files": [
     {
       "label": "整套交付包",
       "format": "ZIP",
-      "path": "files/HW73005-L2000_R01_交付包.zip",
-      "description": "汇总本版图纸、清单和复核说明",
+      "path": "files/R02/HW73005-L2000_R02_交付包.zip",
+      "description": "同版图纸、两份清单、说明与校验记录",
       "available": true,
       "primary": true,
-      "bytes": 7140233,
-      "sha256": "d3eee6474e40de6cdec407e6ccece6d3fa5487aa8b8e0ac01b10239892a990ae"
+      "bytes": 11957972,
+      "sha256": "fc137d09f775c09034e8e42fba01d321bfa247820d72cc194e06a4b3bae54f6b"
     },
     {
-      "label": "CAD 成型深化图",
+      "label": "CAD成型深化图",
       "format": "DWG",
-      "path": "files/HW73005-L2000_R01.dwg",
-      "description": "可编辑成型尺寸与装配基准",
+      "path": "files/R02/HW73005-L2000_R02.dwg",
+      "description": "37布局与可编辑原生尺寸",
       "available": true,
-      "bytes": 152728,
-      "sha256": "c0360b74873345bad86131e328f9b06032cd8f50697211ef13981aebfe594c13"
+      "bytes": 232645,
+      "sha256": "dd4e9fc50f071016af14e0fcb06ad594ebd26a02f523778aca86675a98c3ac8a"
     },
     {
-      "label": "图纸 PDF",
+      "label": "图纸PDF",
       "format": "PDF",
-      "path": "files/HW73005-L2000_R01.pdf",
-      "description": "与 CAD 对应的阅读及打印版本",
+      "path": "files/R02/HW73005-L2000_R02.pdf",
+      "description": "37页图册，含结构、检修及电气接口",
       "available": true,
       "preview": true,
-      "bytes": 4814974,
-      "sha256": "0c985bdb8ef0cef5bd1bed98eaff329f0e4b17fdf5297fe6138f533186925f31",
-      "pages": 25
+      "pages": 37,
+      "bytes": 9405420,
+      "sha256": "17bb52700acea1e6ce7d9a37ad395caa754ac444c8529cf125213a2fde5ea67a"
     },
     {
-      "label": "零件与采购清单",
+      "label": "零件BOM",
       "format": "XLSX",
-      "path": "files/HW73005-L2000_R01_BOM.xlsx",
-      "description": "零件、规格及数量核对",
+      "path": "files/R02/HW73005-L2000_R02_BOM.xlsx",
+      "description": "84项零件、装配及采购数量与图号",
       "available": true,
-      "bytes": 33227,
-      "sha256": "04eab7cf5881afb6d028b43f6a4f3d194401ad648ed13ccacb97eb5105ee8c8c"
+      "bytes": 55876,
+      "sha256": "c8e76336ac63c87682a896bd756f974b44241f11244e1c6c3c8ee1c9414201c5"
+    },
+    {
+      "label": "成品采购清单",
+      "format": "XLSX",
+      "path": "files/R02/HW73005-L2000_R02_采购清单.xlsx",
+      "description": "具体型号、套件拆分、包装及121个来源链接",
+      "available": true,
+      "bytes": 40294,
+      "sha256": "328ae6ec57b40d1d6b789231b88deee97245f8e57e5c24cd0ee4d410edaae4d0"
     },
     {
       "label": "交付说明",
       "format": "PDF",
-      "path": "files/HW73005-L2000_R01_交付说明.pdf",
-      "description": "制作要求、资料范围及待复核事项",
+      "path": "files/R02/HW73005-L2000_R02_交付说明.pdf",
+      "description": "制作、检修、采购范围及实物验收要求",
       "available": true,
-      "bytes": 2541578,
-      "sha256": "4af6b62f78c4a3b4cc59930db3d7e164072b2f37befce32e218312b4956ea85f"
+      "bytes": 2597356,
+      "sha256": "0c8575f5a773b7f9bee6b6b465b1b32ffe6cfa6d5f2aa6244295c22c637d0db2"
     }
   ],
   "previewImages": [
     {
-      "path": "previews/A01-page-01.png",
+      "path": "previews/R02/A01-page-01.png",
       "label": "A01 · 整桌总装与三视",
       "pdfPage": 1
     },
     {
-      "path": "previews/A02-page-02.png",
-      "label": "A02 · 构件分离与装配层次",
-      "pdfPage": 2
-    },
-    {
-      "path": "previews/W01-page-06.png",
-      "label": "W01 · 桌面主板加工",
-      "pdfPage": 6
-    },
-    {
-      "path": "previews/M01-page-21.png",
-      "label": "M01 · 过线外护套",
+      "path": "previews/R02/A08-page-21.png",
+      "label": "A08 · 内部加强与检修通道",
       "pdfPage": 21
+    },
+    {
+      "path": "previews/R02/S10F-page-29.png",
+      "label": "S10F · 中央下放检修位",
+      "pdfPage": 29
+    },
+    {
+      "path": "previews/R02/D01-page-30.png",
+      "label": "D01 · 桌面拆装与工具通道",
+      "pdfPage": 30
+    },
+    {
+      "path": "previews/R02/E02-page-32.png",
+      "label": "E02 · 五支路电气原理",
+      "pdfPage": 32
     }
   ],
   "productionReleased": false,
-  "releaseNote": "本版已经表达成型尺寸、装配基准与零件关系；生产放行还需完成以下首件及工艺核实。",
+  "releaseNote": "R02已补充可拆结构、检修路径和厂家成品接口；以下事项仍是生产放行前的实际验收条件。",
   "releaseConditions": [
-    "钣金展开：折弯内 R、扣除、刀具与焊接收缩尚需试折核定，未发布最终展开下料尺寸。",
-    "配作五金：锁、铰链、排插和毛刷须依据到货型号、模板及样板核定孔形与配合尺寸。",
-    "腿内过线：腿净腔约 24.7 mm，与源要求 ≥25 mm 铁管贯穿存在冲突；R01 提出管止于腿上口，腿内保护与夹持须实物核实。"
+    "工艺与结构：钣金展开补偿、焊接收缩、首件载荷、门盖全行程和M6木嵌件扭矩尚待核定。",
+    "外购配装：五金、电器及固定器按具体型号到货；跨品牌护口、排插外包、胶粘抗滑脱和原装插头净空须首件验证。",
+    "电气与维护：R02进线改走腿外；必须完成接地、绝缘及保护检验，确认中央下放时线缆不受拉，防坠索与PE各自独立。"
   ],
-  "deliveryNote": "资料公开发布不代表生产放行。接收方 CAD 打开、工厂首件、结构稳定性及电气检验尚待实际完成；以本版图纸和交付说明逐项确认。"
+  "deliveryNote": "本页默认R02；历史R01供追溯。资料发布不代表生产放行，接收方CAD、工厂首件与电气实物检验状态按图纸和说明分别确认。",
+  "history": [
+    {
+      "version": "R01",
+      "date": "2026-10-01",
+      "description": "25页原版图册、42项清单。保留供版本追溯；R02已修订结构、检修、电气和成品五金，制作以最新版本为准。",
+      "files": [
+        {
+          "label": "整套交付包",
+          "format": "ZIP",
+          "path": "files/HW73005-L2000_R01_交付包.zip",
+          "description": "汇总本版图纸、清单和复核说明",
+          "available": true,
+          "primary": true,
+          "bytes": 7140233,
+          "sha256": "d3eee6474e40de6cdec407e6ccece6d3fa5487aa8b8e0ac01b10239892a990ae"
+        },
+        {
+          "label": "CAD 成型深化图",
+          "format": "DWG",
+          "path": "files/HW73005-L2000_R01.dwg",
+          "description": "可编辑成型尺寸与装配基准",
+          "available": true,
+          "bytes": 152728,
+          "sha256": "c0360b74873345bad86131e328f9b06032cd8f50697211ef13981aebfe594c13"
+        },
+        {
+          "label": "图纸 PDF",
+          "format": "PDF",
+          "path": "files/HW73005-L2000_R01.pdf",
+          "description": "与 CAD 对应的阅读及打印版本",
+          "available": true,
+          "preview": true,
+          "bytes": 4814974,
+          "sha256": "0c985bdb8ef0cef5bd1bed98eaff329f0e4b17fdf5297fe6138f533186925f31",
+          "pages": 25
+        },
+        {
+          "label": "零件与采购清单",
+          "format": "XLSX",
+          "path": "files/HW73005-L2000_R01_BOM.xlsx",
+          "description": "零件、规格及数量核对",
+          "available": true,
+          "bytes": 33227,
+          "sha256": "04eab7cf5881afb6d028b43f6a4f3d194401ad648ed13ccacb97eb5105ee8c8c"
+        },
+        {
+          "label": "交付说明",
+          "format": "PDF",
+          "path": "files/HW73005-L2000_R01_交付说明.pdf",
+          "description": "制作要求、资料范围及待复核事项",
+          "available": true,
+          "bytes": 2541578,
+          "sha256": "4af6b62f78c4a3b4cc59930db3d7e164072b2f37befce32e218312b4956ea85f"
+        }
+      ]
+    }
+  ]
 }
