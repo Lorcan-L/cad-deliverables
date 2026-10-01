@@ -1,0 +1,27 @@
+# CAD 交付仓库 - 制作深化文件与静态预览
+HTML + CSS + JavaScript + GitHub Pages
+
+<directory>
+assets/ - 共用展示样式与交付页渲染。
+hw73005-l2000/ - HW73005-L2000 体验桌 R01 交付资料、预览与文件索引。
+</directory>
+
+<config>
+index.html - 项目入口页。
+README.md - 仓库用途、交付状态和发布说明。
+.nojekyll - 以原始静态资源发布，不经 Jekyll 转换。
+.gitattributes - 将交付文件与预览标为二进制，防止换行转换改变文件校验值。
+</config>
+
+## 约定
+- 所有颜色来自 assets/style.css 的 CSS 变量，页面复用统一样式组件。
+- 交付页仅从 project.json 读取版本、尺寸、文件和验证状态；真实文件未就绪时禁用下载。
+- 仅在收到主任务的真实交付文件及校核状态后发布；不得声明未完成的工厂验收或 CAD 接收验收。
+- 文件下载使用项目内相对路径，保证 GitHub Pages 子路径可用。
+
+## 发布
+GitHub 仓库：Lorcan-L/cad-deliverables。Pages 目标：main 分支根目录。
+
+## 变更记录
+- 2026-10-01：建立隔离静态发布结构与 R01 下载页面。
+- 2026-10-01：纳入25页图册、42项清单、真实文件校验值及四张图页预览，显著标识成型稿尚未生产放行。
