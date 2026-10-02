@@ -1,5 +1,7 @@
 *.dwg binary
+*.dxf binary
 *.pdf binary
 *.xlsx binary
 *.zip binary
 *.png binary
+*.csv binary

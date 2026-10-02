@@ -3,14 +3,14 @@ HTML + CSS + JavaScript + GitHub Pages
 
 <directory>
 assets/ - 共用展示样式与交付页渲染。
-hw73005-l2000/ - HW73005-L2000 体验桌 R03默认交付、三维查看与R02/R01历史资料、预览与文件索引。
+hw73005-l2000/ - HW73005-L2000 体验桌 R04默认制造审核交付与R03/R02/R01历史资料、预览及文件索引。
 </directory>
 
 <config>
 index.html - 项目入口页。
 README.md - 仓库用途、交付状态和发布说明。
 .nojekyll - 以原始静态资源发布，不经 Jekyll 转换。
-.gitattributes - 将交付文件与预览标为二进制，防止换行转换改变文件校验值。
+.gitattributes - 将DWG/DXF/PDF/XLSX/ZIP/PNG及交付CSV标为二进制，防止换行转换改变文件校验值。
 </config>
 
 ## 约定
@@ -28,3 +28,4 @@ GitHub 仓库：Lorcan-L/cad-deliverables。Pages 目标：main 分支根目录�
 
 - 2026-10-01：默认切换37页R02与两份清单；六份新版下载按R02子目录保存，五份R01历史文件保留原路径。
 - 2026-10-02：默认切换52页R03，新增三维装配查看器、三维DWG及公开校验来源；七份新版下载与全部历史文件分别核对SHA。
+- 2026-10-02：默认切换22页R04制造审核版，新增1:1下料与同版采购表；旧版下载保持原路径，未生产放行。
