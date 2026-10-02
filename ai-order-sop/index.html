@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
-[INPUT]: R04 正式交付、参考制作图的可核实关系、工程师反馈与三轮独立审查。
-[OUTPUT]: 面向手机阅读的 AI 接单能力蒸馏方案与可执行验收门槛。
+[INPUT]: R04 正式交付、参考制作图的可核实关系、工程师图纸模板与三轮独立审查。
+[OUTPUT]: 面向手机阅读的 AI 接单方案、图纸编排模板与 Workflow 运行合同。
 [POS]: 公开方案页；说明方法与证据边界，不充当 R04 生产放行文件。
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
 -->
@@ -10,7 +10,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#245b48">
-  <meta name="description" content="从 HW73005 R04 和工程师反馈蒸馏 AI 定制道具接单能力：Skill、工作流、校验器、证据门槛与三轮评审。">
+  <meta name="description" content="从 HW73005 R04 和工程师反馈蒸馏 AI 定制接单能力：单入口 Skill、动态产品树、关键追问、图纸骨架与分级工作流。">
   <title>AI 接单能力蒸馏方案 · R04 复盘</title>
   <link rel="stylesheet" href="../assets/style.css">
   <style>
@@ -85,9 +85,16 @@
     .gate-card dt{color:var(--primary);font-weight:600}
     .gate-card dd{margin:0;color:var(--ink)}
     .source-list li+li{margin-top:7px}
+    .sheet-list{display:grid;gap:10px;list-style:none;margin:0;padding:0;counter-reset:sheet}
+    .sheet-list li{counter-increment:sheet;display:grid;grid-template-columns:42px minmax(0,1fr);gap:14px;align-items:start;padding:17px 19px;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
+    .sheet-list li:before{content:counter(sheet,decimal-leading-zero);color:var(--primary);font-weight:700}
+    .sheet-list strong{display:block;line-height:1.45}
+    .sheet-list span{display:block;margin-top:4px;color:var(--muted);font-size:14px}
+    .runner-steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-top:16px}
+    .runner-steps .sop-card{box-shadow:none}
     .sop-footer{font-size:12px}
     @media(max-width:800px){.sop-hero{grid-template-columns:1fr;gap:24px}.sop-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.flow{grid-template-columns:repeat(2,minmax(0,1fr))}.gate-grid{grid-template-columns:1fr}}
-    @media(max-width:580px){.sop-header{min-height:70px}.sop-header .header-note{display:none}.sop-hero{padding:40px 0 32px}.sop-hero p.lead{font-size:15px}.hero-summary{padding:21px}.sop-section{padding:34px 0}.sop-grid,.contrast-grid,.score-grid{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}.flow-step{min-height:0;padding:15px}.review-round{grid-template-columns:1fr;gap:7px}.tier-panel{padding:21px}.tier-panel ul{grid-template-columns:1fr}.sop-nav{padding:0 13px}.nav-hint{display:block}}
+    @media(max-width:580px){.sop-header{min-height:70px}.sop-header .header-note{display:none}.sop-hero{padding:40px 0 32px}.sop-hero p.lead{font-size:15px}.hero-summary{padding:21px}.sop-section{padding:34px 0}.sop-grid,.contrast-grid,.score-grid,.runner-steps{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}.flow-step{min-height:0;padding:15px}.review-round{grid-template-columns:1fr;gap:7px}.tier-panel{padding:21px}.tier-panel ul{grid-template-columns:1fr}.sop-nav{padding:0 13px}.nav-hint{display:block}}
     @media(max-width:380px){.flow{grid-template-columns:1fr}}
   </style>
 </head>
@@ -97,7 +104,7 @@
     <span class="header-note">方案文档 · 2026-10-03 · R04 复盘</span>
   </header>
   <nav class="sop-nav" aria-label="本页目录">
-    <a href="#judgment">结论</a><a href="#evidence">真实反例</a><a href="#architecture">系统架构</a><a href="#workflow">接单流程</a><a href="#tiers">交付等级</a><a href="#rounds">三轮评审</a><a href="#evaluation">验收指标</a><a href="#roadmap">落地次序</a>
+    <a href="#judgment">结论</a><a href="#evidence">真实反例</a><a href="#drawing-template">图纸模板</a><a href="#architecture">系统架构</a><a href="#workflow">接单流程</a><a href="#runner">运行方式</a><a href="#tiers">交付等级</a><a href="#rounds">三轮评审</a><a href="#evaluation">验收指标</a><a href="#roadmap">落地次序</a>
   </nav>
   <p class="nav-hint">目录可左右滑动查看更多章节 →</p>
   <main class="page sop-page">
@@ -105,7 +112,7 @@
       <div>
         <p class="eyebrow">AI 接单能力 · 蒸馏方案</p>
         <h1 id="page-title">让 AI 交付可接单的制作资料，靠证据闭环，不靠提示词自信。</h1>
-        <p class="lead">以 HW73005-L2000 R04、工程师参考制作图及最新审图意见为回放材料。目标是让 AI 主动完成方案、出图与自检，并准确判断稿件能用于报价、制造审核，还是已具备生产放行证据。</p>
+        <p class="lead">以 HW73005-L2000 R04、工程师参考制作图及最新审图意见为回放材料。面向未来每单都不同的书桌、展柜、电视柜、衣柜及照明陈列需求：一个 Skill 先读资料、生成产品树，只追问决定方案的少量特性问题，再组织出图和自检。</p>
         <div class="hero-tags"><span>公开方法论</span><span>三轮团队审查</span><span>手机端可读</span><span>R04 仍未生产放行</span></div>
       </div>
       <aside class="hero-summary" aria-label="核心结论">
@@ -140,12 +147,29 @@
       <div class="callout" style="margin-top:16px"><p><strong>更隐蔽的错误：</strong>内部 BOM 有 10 个部件的 30 个三视页码字段与现版图页不一致，仍引用旧节点号；现有打包校验主要核页数、实体数和哈希，没有拦住语义错位。正式交付包与内部生成源都要检查，且不能由同一生成器只检查自己的输出。</p></div>
     </section>
 
+    <section class="sop-section" id="drawing-template">
+      <p class="section-kicker">03 / 工程师图纸模板</p>
+      <h2>先看总成，再按主体逐组展开，喷粉件图收尾。</h2>
+      <p class="section-intro">以下顺序是工程师给出的桌类制作图模板，已收录在单入口 Skill 的桌类参考中。逻辑图类可占一页或连续多页，但不能用轴测图冒充爆炸图；每组主体图后紧跟本组拆件图。配套椅、灯光、喷粉仅在订单确有相应对象或工序时启用。展柜、电视柜和衣柜沿用共性骨架，按自己的产品树替换子总成。</p>
+      <ol class="sheet-list">
+        <li><div><strong>整件三视图＋轴侧图</strong><span>首页给正、俯、左/右侧视和轴侧图；标主要材质、各主体数量。涉及灯光时同页注明供电电压与色温（K），并与电气页、BOM 一致。</span></div></li>
+        <li><div><strong>整件爆炸图＋零部件材质</strong><span>第二组用真实分离关系标件号、数量和装回方向；逐件标注材质，并能从正式 BOM 双向找到对应行。</span></div></li>
+        <li><div><strong>桌面三视图＋轴侧图</strong><span>给桌面分总成的正、俯、左/右侧视与轴侧图，标尺寸、材料、固定接口和本组件号。</span></div></li>
+        <li><div><strong>桌面零部件拆解图</strong><span>紧接桌面主体图，逐件给加工所需视图、材料、尺寸、数量及孔槽/连接关系；不可跳到其他分总成后再补。</span></div></li>
+        <li><div><strong>桌体三视图＋轴侧图，或桌体爆炸图</strong><span>选择能解释支承、腿、围板和接口的一种主体表达；选爆炸图也不能省掉制造件必需的成型三视。</span></div></li>
+        <li><div><strong>桌体及配套椅零部件拆解图</strong><span>紧接各自主体图逐件展开；订单含椅子时，为椅子建立主体图及其紧随的拆件组，不把不存在的椅件塞入本单。</span></div></li>
+        <li><div><strong>其他必要工艺图</strong><span>焊接、木作、五金、电气及灯具安装按适用工序编排，保持件号、材料和数量与主体图同版。</span></div></li>
+        <li><div><strong>零部件喷粉图置于图册末尾</strong><span>逐件标喷粉件号、数量、完整尺寸、可见面、遮蔽与挂点/夹持面；无喷粉工序时记录“不适用”，不生成空白末页。</span></div></li>
+      </ol>
+      <div class="callout" style="margin-top:16px"><p><strong>机器验收口径：</strong>冻结图页清单后核首页/第二组类型、每个主体图与拆件图的相邻关系、末尾喷粉组、件号及数量/材质/尺寸字段；灯光存在时核电压与色温。校验最终 DWG/PDF 和正式 BOM 的实读内容，读不到字段标 <code>UNVERIFIED</code>，不拿生成器清单自证。</p></div>
+    </section>
+
     <section class="sop-section" id="architecture">
-      <p class="section-kicker">03 / 系统设计</p>
-      <h2>采用通用内核，按品类加载工艺规则。</h2>
-      <p class="section-intro">单个 Skill 可以做入口，但接单能力必须跨越任务回合、文件和工厂环节。桌、柜、木作、钣金、喷粉、电气和照明按订单启用；不把本单的 8 点 M6、页序或灯光要求硬编码给所有项目。</p>
+      <p class="section-kicker">04 / 系统设计</p>
+      <h2>一个 Skill 接单，产品树决定本单图纸。</h2>
+      <p class="section-intro">用户只需进入一个 Skill。它从来源构建“整件→子总成→零件→工序”产品树，再组合共性骨架和条件模块；Runner、出图工具与校验器是后台能力。桌、柜、木作、钣金、喷粉、电气和照明按实际结构启用，不把 R04 的 8 点 M6 或桌类页序硬编码给所有订单。</p>
       <div class="sop-grid">
-        <article class="sop-card"><span class="number">01 · Skill</span><strong>做判断</strong><p>规定来源优先级、占位识别、冲突处理、主动结构推演、各等级能声称什么，以及何时降级。保持短而稳定。</p></article>
+        <article class="sop-card"><span class="number">01 · Skill</span><strong>唯一接单入口</strong><p>先读订单和图纸，识别子总成及特性模块；只对结构、材料、接口、报价或安全的关键未知集中追问，再决定出图路径与交付等级。</p></article>
         <article class="sop-card"><span class="number">02 · Workflow</span><strong>管状态</strong><p>冻结订单输入，维护需求—接口—零件—工序图谱、问题单、版本和交付等级。修改一个件号后重验受影响链路。</p></article>
         <article class="sop-card"><span class="number">03 · Validators</span><strong>拦确定性错误</strong><p>独立回读 PDF/DWG/XLSX/DXF；检查材料、厚度、数量、页码、节点号、1:1、轮廓、孔槽、镜像及成型—展开同版。</p></article>
         <article class="sop-card"><span class="number">04 · Reviewer</span><strong>挑工程缺陷</strong><p>与生成过程隔离，只看冻结输入和实际交付；审受力路径、装配、维修、喷粉挂具、线缆及缺失条件。</p></article>
@@ -153,17 +177,24 @@
         <article class="sop-card warning"><span class="number">关键防错</span><strong>防止同源共错</strong><p>同一个 JSON 生成所有文件，可能让所有文件一致地错。用独立读取器、参考约束和接收方行为交叉验证最终件。</p></article>
       </div>
       <p class="sop-copy">每项要求保存来源类型、文件哈希与图页/实体位置、权威级别、状态（明确／推算／候选／未知／冲突／占位）、适用件号与验收方法。关键材料拆成基材、饰面、阻燃等级、厚度和表面处理；验证记录保存工具版本、测量值、输入输出哈希及执行人。这样“参考图占位”不会被继承为真实 BOM。</p>
+      <h3 style="margin:27px 0 12px">共性骨架固定，特性模块按单组合</h3>
+      <div class="sop-grid">
+        <article class="sop-card"><span class="number">每单共性</span><strong>总装→爆炸→逐组拆件</strong><p>多零件产品有总装三视与轴侧、真实爆炸；沿产品树深度优先排列主体图和紧随的零件图，正式 BOM、件号和工序与图册同版。</p></article>
+        <article class="sop-card"><span class="number">条件模块</span><strong>需求出现才启用</strong><p>展柜的搁板/玻璃/展示载荷，衣柜的门抽/挂衣/防倾倒，书桌的走线，照明的电压/色温/散热，喷粉的挂具等各自生成图页与 gate。</p></article>
+        <article class="sop-card"><span class="number">未知项</span><strong>只问改变决策的事</strong><p>先查已有资料；仅当缺项会改变结构、材料、价格范围、接口或安全时，每轮集中 1–3 问，给可选方案、影响与阻断等级。其他部分继续制作。</p></article>
+      </div>
+      <div class="callout" style="margin-top:16px"><p><strong>追问例子：</strong>带灯书桌若图里已给灯槽，就不再问“要不要灯”；只问未明确的电压、色温及驱动位置。展柜若展示物重量未定，先完成外形和空间图，再问设计载荷及玻璃/搁板支承。衣柜若壁固定条件不明，先完成布局，再问安装基体与防倾倒方式。设计中出现新分歧再问，不要求开工前填完所有字段。答复记录来源、版本及影响件号，回写后只重验相关链路。</p><p>问题交由用户指定的结构接单人答复；尚未授权对外联系时，Skill 生成可转发的问题单，不自行发送。</p></div>
     </section>
 
     <section class="sop-section" id="workflow">
-      <p class="section-kicker">04 / 接单流程</p>
+      <p class="section-kicker">05 / 接单流程</p>
       <h2>每一关交出证据，失败只阻断受影响范围。</h2>
       <p class="section-intro">状态机以“件号 × 工序 × 交付等级”为最小判定单元；喷粉挂点未定，不该阻止有依据的条件报价，但不能交喷粉生产文件。局部阻断要沿接口与父总成关系传播，涉及整桌安全时升级为整单阻断。所有等级由程序根据证据计算，不由 AI 自述。</p>
       <div class="flow">
         <div class="flow-step"><span class="step-id">G0 / 输入</span><strong>订单与来源冻结</strong><p>版本、单位、适用品类、客户目标、参考图和冲突列表。</p></div>
-        <div class="flow-step"><span class="step-id">G1 / 需求</span><strong>原子要求追溯</strong><p>每条要求落到件、接口、工序或显式未知，禁止静默丢失。</p></div>
-        <div class="flow-step"><span class="step-id">G2 / 工程</span><strong>方案与风险推演</strong><p>连接、承载、闭合、装配、维护、线缆；候选与已验证分开。</p></div>
-        <div class="flow-step"><span class="step-id">G3 / 出图</span><strong>同版生成</strong><p>总装→分总成→零件→工艺；图册、BOM、下料共享件号。</p></div>
+        <div class="flow-step"><span class="step-id">G1 / 需求</span><strong>提取产品树</strong><p>每条要求落到总成、件号、接口、工序或显式未知；自动辨认共性与条件模块。</p></div>
+        <div class="flow-step"><span class="step-id">G2 / 工程</span><strong>推演并少量追问</strong><p>先查来源、再问阻断决策的特性参数；连接、承载、闭合、装配、维护和线缆继续推演。</p></div>
+        <div class="flow-step"><span class="step-id">G3 / 出图</span><strong>本单图页清单</strong><p>总装→爆炸→按产品树逐组主体/零件→适用工艺；图册、BOM、下料共享件号。</p></div>
         <div class="flow-step"><span class="step-id">G4 / 机器校验</span><strong>独立回读</strong><p>实读最终 PDF/DWG/XLSX/DXF 的几何和跨文件引用。PDF 文本若转路径，改用独立 OCR 与逐页视觉定位；读不到的字段标未验证。</p></div>
         <div class="flow-step"><span class="step-id">G5 / 独立审查</span><strong>反向找错</strong><p>审图者按源约束、工艺、实际文件找漏项与错误放行。</p></div>
         <div class="flow-step"><span class="step-id">G6 / 实物</span><strong>工厂与首件证据</strong><p>接收方开图、材料与工装参数、试折、试挂、装配和功能。</p></div>
@@ -173,8 +204,23 @@
       <div class="callout"><p><strong>最小数据合同示例：</strong>源图要求“桌面四周无翘角” → W01 桌面与支承接口 → A01 总装 / W01 零件页 / 固定工序 → 最终 DWG 孔位、正式 BOM 材质和约定工况记录 → 抗翘约束 gate。缺工况或支承验证时结果为 <code>UNVERIFIED</code>，阻断制造审核完整性及生产放行；报价只允许列为明示假设。</p></div>
     </section>
 
+    <section class="sop-section" id="runner">
+      <p class="section-kicker">06 / Workflow 如何运行</p>
+      <h2>Skill 给判断规则，Runner 串步骤，Validator 决定能否过关。</h2>
+      <p class="section-intro">单入口 <code>custom-furniture-production</code> Skill 已建第一版；接单 Runner 尚未写成可执行程序。Skill 是 Codex 读的工作说明，能让它提取产品树、少量追问、选择适用规则并调用工具；它本身不会持久保存订单状态，也不能可靠地判定最终 CAD 文件。第一版 Runner 宜用本地 CLI 启动一单，成熟后再接任务队列或界面。</p>
+      <div class="runner-steps">
+        <article class="sop-card"><span class="number">01 · 订单输入</span><strong>冻结一份订单</strong><p><code>order.yaml</code> 记录客户目标、图纸来源、数量、材料、工艺、交付等级、版本及未知项；原始文件哈希不随生成稿改写。</p></article>
+        <article class="sop-card"><span class="number">02 · 动态规则</span><strong>组装本单模板</strong><p>Skill 现有桌类参考；未来机器 profile 要把通用三视/爆炸骨架与本单的柜体、门抽、陈列、照明、喷粉模块组合成图页清单。</p></article>
+        <article class="sop-card"><span class="number">03 · Runner</span><strong>执行 G0–G7 状态机</strong><p>按依赖启动需求提取、工程推演、出图与校验，保存运行 ID、输入/输出哈希、问题单及每个 gate 的 <code>PASS/FAIL/UNVERIFIED</code>。</p></article>
+        <article class="sop-card"><span class="number">04 · 生成器</span><strong>产出同版文件</strong><p>从冻结件号和图页清单生成 DWG、PDF、正式 BOM 与适用的 DXF；图页顺序是生成输入，不靠最终人工拖页补救。</p></article>
+        <article class="sop-card"><span class="number">05 · 独立校验器</span><strong>回读最终交付件</strong><p>另一路读取 DWG/PDF/XLSX/DXF，校对页序、三视、件号、材质、数量、尺寸、电压/色温及跨文件关系；文本转路径时用独立 OCR 与视觉定位。</p></article>
+        <article class="sop-card"><span class="number">06 · Gate 与封包</span><strong>只输出证据允许的等级</strong><p>失败或缺证定位到件号/工序并沿接口传播，自动重验受影响链路；报价、制造审核、生产放行各有独立出口，实物证据由接收方补录。</p></article>
+      </div>
+      <div class="callout" style="margin-top:16px"><p><strong>串联动作：</strong>用户调用一个 Skill → Codex 读资料、生成产品树和少量关键问题 → Runner 接收冻结订单与动态图页清单 → 调用出图工具 → 独立校验器回读正式文件 → gate 写状态与问题单 → 按等级封包或回到受影响步骤。每次修订生成新 run，旧验证按输入哈希失效；不得把 R04 的哈希、页码或结论复制到新订单。</p><p><strong>最小落地次序：</strong>先把共性骨架、工程师桌类模板和条件模块做成机器可读图页清单与 <code>DRW/LED/SPR</code> 规则，在 R04 副本上回放；再接现有出图脚本与状态记录；最后用一张新单做 shadow mode。完成这些之前，页面上的 G0–G7 是设计，不是已经自动运行的流程。</p></div>
+    </section>
+
     <section class="sop-section" id="tiers">
-      <p class="section-kicker">05 / 交付等级</p>
+      <p class="section-kicker">07 / 交付等级</p>
       <h2>“可接单”先定义可用于哪一步。</h2>
       <p class="section-intro">选择等级查看硬门槛。报价稿可以带清楚的假设；生产放行不能借用报价假设。</p>
       <div class="tier-controls" role="group" aria-label="切换交付等级">
@@ -200,7 +246,7 @@
     </section>
 
     <section class="sop-section" id="rounds">
-      <p class="section-kicker">06 / 本次团队三轮</p>
+      <p class="section-kicker">08 / 本次团队三轮</p>
       <h2>三轮审查的是方案，不冒充三轮实物验收。</h2>
       <p class="section-intro">参考图与 R04 审计、现有 Skill/脚本审计、工作流设计三个角色独立起稿，再相互批驳；最后对 HTML 成稿和发布前文件做盲点审查。</p>
       <div class="review-rounds">
@@ -211,7 +257,7 @@
     </section>
 
     <section class="sop-section" id="evaluation">
-      <p class="section-kicker">07 / 能力评估</p>
+      <p class="section-kicker">09 / 能力评估</p>
       <h2>先在 R04 拦住已知错误，再用新订单检验泛化。</h2>
       <p class="section-intro">R04 与微信反馈只做开发回放集。冻结 SOP 后，未来真实订单按项目、客户和工厂隔离为保留集；同一订单的修订版不得同时出现在训练与盲测侧。盲测不给生成角色工程师结论，由独立审查者标注并裁决分歧。</p>
       <div class="score-grid">
@@ -223,24 +269,27 @@
         <div class="score-card"><strong>已知故障注入</strong><p>故意移孔但保持实体类型、缩放 DXF、删材料列、错置图页、漏挂点，验证门槛是否真正阻断。</p></div>
       </div>
       <h3 style="margin:28px 0 10px">可执行 gate 合同：R04 回放样例</h3>
-      <p class="sop-copy">每条规则均保存适用条件、最终文件输入、判定谓词、缺证状态、阻断等级和传播范围。下列判定是待实现的规则合同，不宣称现有校验器已经执行。</p>
+      <p class="sop-copy">每条规则均保存适用条件、最终文件输入、判定谓词、缺证状态、阻断等级和传播范围。图页可跨多张，顺序按逻辑图类及连续页组判断。下列判定是待实现的规则合同，不宣称现有校验器已经执行。</p>
       <div class="gate-grid">
+        <article class="gate-card"><h3>DRW-01 · 动态图册</h3><dl><dt>适用</dt><dd>多件定制订单</dd><dt>输入</dt><dd>最终 DWG/PDF 图页、冻结产品树与图页清单</dd><dt>谓词</dt><dd>首页总装三视＋轴侧及主要材质/数量；第二组真实爆炸＋件材；每个子总成主体图紧跟本组拆件图</dd><dt>缺证</dt><dd>UNVERIFIED</dd><dt>阻断</dt><dd>制造审核完整性与生产放行</dd><dt>范围</dt><dd>整本图册及受影响分总成</dd></dl></article>
+        <article class="gate-card"><h3>ASK-01 · 决策缺项</h3><dl><dt>适用</dt><dd>来源缺关键特性或相互冲突</dd><dt>输入</dt><dd>冻结订单、来源索引、问题与答复记录</dd><dt>谓词</dt><dd>已自查来源；影响结构/材料/价格/接口/安全的未知项已答复，或明确阻断对应等级</dd><dt>缺证</dt><dd>UNVERIFIED</dd><dt>阻断</dt><dd>按影响阻断报价、制造审核或生产放行</dd><dt>范围</dt><dd>关联件号及其接口/父总成</dd></dl></article>
         <article class="gate-card"><h3>MAT-01 · 桌面材料</h3><dl><dt>适用</dt><dd>有 W01 木作桌面时</dd><dt>输入</dt><dd>正式 BOM、W01 图页、冻结材料要求</dd><dt>谓词</dt><dd>基材、饰面、阻燃等级、厚度和数量一致且非占位</dd><dt>缺证</dt><dd>UNVERIFIED</dd><dt>阻断</dt><dd>制造审核完整性与生产放行</dd><dt>范围</dt><dd>W01 → 桌面接口 → 总成</dd></dl></article>
-        <article class="gate-card"><h3>EXP-01 · 爆炸追溯</h3><dl><dt>适用</dt><dd>多零件总成</dd><dt>输入</dt><dd>最终 PDF/DWG、正式 BOM</dd><dt>谓词</dt><dd>真实分离视图中件号、数量、装回关系与 BOM 双向一致</dd><dt>缺证</dt><dd>UNVERIFIED</dd><dt>阻断</dt><dd>制造审核完整性与生产放行</dd><dt>范围</dt><dd>相关分总成及其父总成</dd></dl></article>
-        <article class="gate-card"><h3>SPR-01 · 喷粉挂具</h3><dl><dt>适用</dt><dd>需喷粉的钢件</dd><dt>输入</dt><dd>F01 工艺页、件号图、供应商挂具记录</dd><dt>谓词</dt><dd>逐件挂点或夹持面、数量、尺寸、遮蔽与外观面无冲突</dd><dt>缺证</dt><dd>UNVERIFIED</dd><dt>阻断</dt><dd>喷粉工序生产放行</dd><dt>范围</dt><dd>受影响钢件及装配接口；若安全相关则总成</dd></dl></article>
+        <article class="gate-card"><h3>EXP-01 · 爆炸追溯</h3><dl><dt>适用</dt><dd>多零件总成</dd><dt>输入</dt><dd>最终 PDF/DWG、正式 BOM</dd><dt>谓词</dt><dd>真实分离视图中件号、材质、数量、装回关系与 BOM 双向一致</dd><dt>缺证</dt><dd>UNVERIFIED</dd><dt>阻断</dt><dd>制造审核完整性与生产放行</dd><dt>范围</dt><dd>相关分总成及其父总成</dd></dl></article>
+        <article class="gate-card"><h3>LED-01 · 灯光参数</h3><dl><dt>适用</dt><dd>订单包含灯光</dd><dt>输入</dt><dd>首页、电气页、灯具清单</dd><dt>谓词</dt><dd>首页标供电电压和色温 K，与电源、灯具型号和 BOM 一致</dd><dt>缺证</dt><dd>UNVERIFIED</dd><dt>阻断</dt><dd>电气制造审核完整性与生产放行</dd><dt>范围</dt><dd>灯具、电源、布线接口及总成</dd></dl></article>
+        <article class="gate-card"><h3>SPR-01 · 喷粉末页</h3><dl><dt>适用</dt><dd>需喷粉的钢件</dd><dt>输入</dt><dd>最终图册末页组、件号图、供应商挂具记录</dd><dt>谓词</dt><dd>喷粉图位于末尾；逐件标数量、完整尺寸、挂点或夹持面，遮蔽与外观面无冲突</dd><dt>缺证</dt><dd>UNVERIFIED</dd><dt>阻断</dt><dd>图册完整性与喷粉工序生产放行</dd><dt>范围</dt><dd>受影响钢件及装配接口；若安全相关则总成</dd></dl></article>
       </div>
       <p class="sop-copy"><strong>盲测协议：</strong>上线试运行前冻结同一受控产品族的前 20 个合格新单、金标标注方式与停止规则。S0 为错误生产放行或重大安全风险漏项，S1 为导致退单的关键材料、结构或工艺漏项；任一 S0/S1 逃逸即停止自动升级并复盘。20 单零逃逸只能支持该产品族继续受控试运行，不能证明普遍可靠。</p>
       <div class="callout" style="margin-top:16px"><p><strong>零人工审核的边界：</strong>先在同工厂、同材料和受控尺寸/工艺范围的重复产品族试行“异常才人工审”。连续少量成功只能说明试运行顺利，不能证明新结构的严重缺陷概率为零。对新结构仍需接收方和首件证据。</p></div>
     </section>
 
     <section class="sop-section" id="roadmap">
-      <p class="section-kicker">08 / 落地次序</p>
+      <p class="section-kicker">10 / 落地次序</p>
       <h2>先修会放走错误的关口，再追求更快出图。</h2>
       <div class="sop-grid">
         <article class="sop-card"><span class="number">P0 · R04 回放</span><strong>封闭真实反例</strong><p>统一桌面材料；复核四边约束与腿口；补全桌爆炸、喷粉挂具、正式 XLSX 必需列；喷粉图排在本单工艺包末尾并修复 BOM 旧引用。每项保留修前/修后证据。</p></article>
         <article class="sop-card"><span class="number">P0 · 验收器</span><strong>先做语义 gate</strong><p>对最终文件实读材料、数量、页码、节点和工艺引用；几何坐标而非仅实体数；1:1 分开核。</p></article>
-        <article class="sop-card"><span class="number">P1 · 接单引擎</span><strong>建立状态机</strong><p>订单输入、件号与接口图谱、变更传播、分级封包、局部阻断和可追溯问题单。</p></article>
-        <article class="sop-card"><span class="number">P1 · 品类规则</span><strong>桌与柜分 profile</strong><p>共用证据合同；木作、钣金、喷粉、电气、灯光按实际配置启用，避免套错参考案例。</p></article>
+        <article class="sop-card"><span class="number">P1 · 接单引擎</span><strong>建立状态机</strong><p>把已建的单入口 Skill 接到订单输入、产品树、关键追问、变更传播、分级封包与可追溯问题单。</p></article>
+        <article class="sop-card"><span class="number">P1 · 条件规则</span><strong>从产品树组合模块</strong><p>共用三视/爆炸/逐组拆件骨架；门抽、玻璃展示、木作、钣金、喷粉、电气、灯光按本单需求生成图页和 gate。</p></article>
         <article class="sop-card"><span class="number">P2 · Shadow mode</span><strong>真实新单盲测</strong><p>AI 独立交稿，人工和工厂照常验收；记录严重逃逸、一次接收、返工与人工分钟数。</p></article>
         <article class="sop-card"><span class="number">P3 · 受控自动化</span><strong>逐步减人审</strong><p>仅对已验证的重复产品族及参数包络开放自动交稿；新结构和异常自动回退审核。</p></article>
       </div>
