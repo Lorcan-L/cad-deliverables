@@ -361,7 +361,10 @@
     }
   ],
   "viewer": {
-    "available": false
+    "available": true,
+    "label": "打开 R04 同版三维装配",
+    "path": "files/R04/viewer/index.html",
+    "description": "按83件号旋转、分离、定位孔与线路，并跳转同版22页图册；加工尺寸以正式图纸为准。"
   },
   "references": [
     {
