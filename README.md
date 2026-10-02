@@ -6,6 +6,8 @@
 
 [HW73005-L2000体验桌](https://lorcan-l.github.io/cad-deliverables/hw73005-l2000/)默认R04：22页图册、83项部件、35项五金组件、19种平板激光DXF与1种矩管锯切资料。R03/R02/R01历史下载保持原路径。
 
+[AI 接单能力蒸馏方案](https://lorcan-l.github.io/cad-deliverables/ai-order-sop/)以 R04 和工程师反馈为回放材料，提出 Skill、状态工作流、独立校验器与分级交付的实施路径；方案本身不代表生产放行。
+
 ## 文件结构
 
 project.json记录版次、可用状态、大小和SHA256。当前文件位于files/R04；R03交互三维仍位于files/R03/viewer。预览来自各版最终PDF。

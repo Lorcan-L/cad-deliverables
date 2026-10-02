@@ -1,0 +1,271 @@
+<!doctype html>
+<!--
+[INPUT]: R04 正式交付、参考制作图的可核实关系、工程师反馈与三轮独立审查。
+[OUTPUT]: 面向手机阅读的 AI 接单能力蒸馏方案与可执行验收门槛。
+[POS]: 公开方案页；说明方法与证据边界，不充当 R04 生产放行文件。
+[PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#245b48">
+  <meta name="description" content="从 HW73005 R04 和工程师反馈蒸馏 AI 定制道具接单能力：Skill、工作流、校验器、证据门槛与三轮评审。">
+  <title>AI 接单能力蒸馏方案 · R04 复盘</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .sop-page{max-width:1080px;padding-bottom:80px}
+    .sop-header{min-height:76px;height:auto;gap:18px}
+    .sop-header .header-note{text-align:right}
+    .sop-nav{position:sticky;top:0;z-index:20;width:100%;margin:0;padding:0 max(20px,calc((100vw - 1080px)/2));display:flex;gap:8px;overflow-x:auto;white-space:nowrap;background:var(--background);border-bottom:1px solid var(--line);scrollbar-width:none}
+    .sop-nav::-webkit-scrollbar{display:none}
+    .sop-nav a{padding:13px 11px;color:var(--muted);font-size:14px}
+    .nav-hint{display:none;margin:7px 0 0;color:var(--muted);font-size:14px}
+    .sop-nav a:hover,.sop-nav a:focus-visible{color:var(--primary)}
+    .sop-hero{padding:66px 0 46px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.6fr);gap:42px;align-items:end}
+    .sop-hero h1{max-width:760px}
+    .sop-hero p.lead{max-width:690px;font-size:17px;line-height:1.8;color:var(--muted);margin:22px 0 0}
+    .hero-summary{padding:26px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow)}
+    .hero-summary strong{display:block;font-size:28px;line-height:1.25;font-weight:600;letter-spacing:-.03em}
+    .hero-summary p{font-size:14px;color:var(--muted);margin:12px 0 0}
+    .hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+    .hero-tags span,.mini-tag{display:inline-flex;border-radius:99px;padding:5px 11px;border:1px solid var(--line);background:var(--surface);font-size:14px;color:var(--primary)}
+    .sop-section{padding:43px 0;border-top:1px solid var(--line);scroll-margin-top:56px}
+    .sop-section .section-intro{color:var(--muted);max-width:780px;margin:13px 0 25px;font-size:14px}
+    .section-kicker{font-size:11px;letter-spacing:.13em;font-weight:700;color:var(--primary);margin:0 0 8px}
+    .sop-section h2{font-size:clamp(26px,3.2vw,36px)}
+    .sop-section h3{font-size:18px}
+    .sop-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+    .sop-card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow)}
+    .sop-card p{font-size:14px;color:var(--muted);margin:10px 0 0}
+    .sop-card .number{display:block;font-size:12px;color:var(--primary);font-weight:700;margin-bottom:12px}
+    .sop-card strong{display:block;font-size:17px;line-height:1.45}
+    .sop-card.warning{background:var(--pending-background);border-color:color-mix(in srgb,var(--pending) 22%,var(--line))}
+    .sop-card.warning .number{color:var(--pending)}
+    .sop-card a,.sop-copy a,.source-list a{color:var(--primary);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--primary) 35%,transparent);text-underline-offset:3px}
+    .sop-copy{font-size:14px;line-height:1.8;max-width:840px}
+    .callout{padding:22px 25px;border-radius:20px;background:var(--accent);border-left:4px solid var(--primary);font-size:14px;line-height:1.75}
+    .callout p{margin:0}
+    .callout p+p{margin-top:9px}
+    .contrast-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .layer-card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:24px}
+    .layer-card h3{margin-bottom:8px}
+    .layer-card p{margin:0;color:var(--muted);font-size:14px}
+    .layer-card ul,.plain-list{padding-left:19px;margin:13px 0 0;font-size:14px}
+    .layer-card li+li,.plain-list li+li{margin-top:7px}
+    .flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+    .flow-step{background:var(--surface);border:1px solid var(--line);border-radius:19px;padding:19px;min-height:164px}
+    .flow-step .step-id{color:var(--primary);font-size:11px;font-weight:700;letter-spacing:.08em}
+    .flow-step strong{display:block;margin:10px 0 7px;line-height:1.4}
+    .flow-step p{font-size:14px;color:var(--muted);margin:0}
+    .tier-controls{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0 14px}
+    .tier-controls button{cursor:pointer;border:1px solid var(--line);border-radius:99px;padding:10px 17px;background:var(--surface);color:var(--ink);font-size:14px}
+    .tier-controls button[aria-pressed="true"]{background:var(--primary);color:var(--primary-foreground);border-color:var(--primary)}
+    .tier-panel{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:27px}
+    .tier-panel h3{font-size:21px}
+    .tier-panel p{font-size:14px;color:var(--muted)}
+    .tier-panel ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 26px;padding-left:20px;font-size:14px}
+    .tier-panel .result{border-top:1px solid var(--line);padding-top:13px;color:var(--primary);font-weight:600}
+    .review-rounds{display:grid;gap:13px}
+    .review-round{display:grid;grid-template-columns:132px minmax(0,1fr);gap:18px;align-items:start;padding:22px;border:1px solid var(--line);border-radius:22px;background:var(--surface)}
+    .review-round .round-label{font-size:12px;font-weight:700;color:var(--primary)}
+    .review-round h3{margin:0 0 5px}
+    .review-round p{font-size:14px;color:var(--muted);margin:0}
+    .review-round .round-output{font-size:14px;color:var(--ink);margin-top:10px}
+    .code-sample{overflow:auto;border-radius:20px;background:var(--ink);color:var(--surface);padding:20px 22px;font-size:12px;line-height:1.7}
+    .score-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+    .score-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px}
+    .score-card strong{font-size:15px}
+    .score-card p{margin:7px 0 0;font-size:14px;color:var(--muted)}
+    .source-list{margin:0;padding-left:20px;font-size:14px;color:var(--muted)}
+    .gate-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-top:16px}
+    .gate-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px}
+    .gate-card h3{margin-bottom:10px}
+    .gate-card dl{display:grid;grid-template-columns:56px 1fr;gap:7px;margin:0;font-size:14px}
+    .gate-card dt{color:var(--primary);font-weight:600}
+    .gate-card dd{margin:0;color:var(--ink)}
+    .source-list li+li{margin-top:7px}
+    .sop-footer{font-size:12px}
+    @media(max-width:800px){.sop-hero{grid-template-columns:1fr;gap:24px}.sop-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.flow{grid-template-columns:repeat(2,minmax(0,1fr))}.gate-grid{grid-template-columns:1fr}}
+    @media(max-width:580px){.sop-header{min-height:70px}.sop-header .header-note{display:none}.sop-hero{padding:40px 0 32px}.sop-hero p.lead{font-size:15px}.hero-summary{padding:21px}.sop-section{padding:34px 0}.sop-grid,.contrast-grid,.score-grid{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}.flow-step{min-height:0;padding:15px}.review-round{grid-template-columns:1fr;gap:7px}.tier-panel{padding:21px}.tier-panel ul{grid-template-columns:1fr}.sop-nav{padding:0 13px}.nav-hint{display:block}}
+    @media(max-width:380px){.flow{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header class="site-header sop-header">
+    <a class="brand" href="../"><span class="brand-mark">C</span> CAD 交付资料</a>
+    <span class="header-note">方案文档 · 2026-10-03 · R04 复盘</span>
+  </header>
+  <nav class="sop-nav" aria-label="本页目录">
+    <a href="#judgment">结论</a><a href="#evidence">真实反例</a><a href="#architecture">系统架构</a><a href="#workflow">接单流程</a><a href="#tiers">交付等级</a><a href="#rounds">三轮评审</a><a href="#evaluation">验收指标</a><a href="#roadmap">落地次序</a>
+  </nav>
+  <p class="nav-hint">目录可左右滑动查看更多章节 →</p>
+  <main class="page sop-page">
+    <section class="sop-hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">AI 接单能力 · 蒸馏方案</p>
+        <h1 id="page-title">让 AI 交付可接单的制作资料，靠证据闭环，不靠提示词自信。</h1>
+        <p class="lead">以 HW73005-L2000 R04、工程师参考制作图及最新审图意见为回放材料。目标是让 AI 主动完成方案、出图与自检，并准确判断稿件能用于报价、制造审核，还是已具备生产放行证据。</p>
+        <div class="hero-tags"><span>公开方法论</span><span>三轮团队审查</span><span>手机端可读</span><span>R04 仍未生产放行</span></div>
+      </div>
+      <aside class="hero-summary" aria-label="核心结论">
+        <p class="section-kicker">核心架构</p>
+        <strong>1 个 Skill<br>＋ 1 条有状态流程<br>＋ 独立校验器</strong>
+        <p>Skill 管判断，流程管状态，校验器管确定性错误；工程和工厂证据决定能否放行。</p>
+      </aside>
+    </section>
+
+    <section class="sop-section" id="judgment">
+      <p class="section-kicker">01 / 判断</p>
+      <h2>现有 Skill 有方向，单独使用不足以兜底。</h2>
+      <p class="section-intro">当前 Skill 已要求三视、爆炸、逐件追溯和 1:1 下料。R04 的问题证明：写进说明 ≠ 生成器执行 ≠ 最终文件通过验证。要补的是能拦住错误交付的流程和证据，不是单纯延长提示词。</p>
+      <div class="contrast-grid">
+        <div class="layer-card"><h3>AI 应主动做</h3><p>读取源图、识别结构风险、提出候选方案、生成图纸和清单、逐件核对、修复可证实的漏项，并在证据不足时降低交付等级。</p></div>
+        <div class="layer-card"><h3>不能由文件自证</h3><p>桌面长期抗翘、焊接与挂具实际可行、材料回弹、接收方 CAD 行为及首件装配。它们需要约定工况、独立审查或真实试验记录。</p></div>
+      </div>
+    </section>
+
+    <section class="sop-section" id="evidence">
+      <p class="section-kicker">02 / R04 反例</p>
+      <h2>把工程师反馈变成可回放的失败样本。</h2>
+      <p class="section-intro">以下是图纸和数据可支持的事实；结构风险只标为待验证，不把工程师建议直接当成唯一做法。<a href="../hw73005-l2000/files/R04/HW73005-L2000_R04.pdf">查看 R04 图册</a>。</p>
+      <div class="sop-grid">
+        <article class="sop-card"><span class="number">E01 · 需求丢失</span><strong>桌面四周无翘角</strong><p>源图已写明目标，并建议葫芦孔与角码；R04 采用 8 点 M6 底部固定。应核周边约束与使用工况。葫芦孔是候选方法，不是通用强制件。</p></article>
+        <article class="sop-card"><span class="number">E02 · 部分闭合</span><strong>桌腿不是“完全没封板”</strong><p>S03A 壳高 877 mm，S03B/S03B-P 内端封板高 777 mm，另有底封板。顶部斜切区域的闭合、进线与焊接仍要审。</p></article>
+        <article class="sop-card"><span class="number">E03 · 装配表达</span><strong>轴测不能冒充爆炸图</strong><p>A01 有三视与成品轴测；A03 有底部安装轴测，却没有全桌构件实际分离、件号覆盖和装回关系。参考 F02 有爆炸关系，但件表是占位符。</p></article>
+        <article class="sop-card"><span class="number">E04 · 对外交付</span><strong>内部有材质，正式表却缺列</strong><p>R04 正式 XLSX 的部件页未列材质、厚度、表面处理；内部 BOM 存在材料字段也不能代替工厂拿到的表。W01 的饰面说明还未统一。</p></article>
+        <article class="sop-card"><span class="number">E05 · 工艺缺口</span><strong>喷粉页缺挂具方案</strong><p>F01 展示部分件数与泛工艺注释，没有逐件尺寸、挂点或夹持面。工程师要求喷粉图排在末尾，可在本单目录或分包顺序落实，不必删除电气页。</p></article>
+        <article class="sop-card"><span class="number">E06 · 比例语义</span><strong>三个“1:1”不可混算</strong><p>独立激光 DXF 是毫米原尺寸几何；PDF 零件页有缩比视图。Model 几何、Layout 视口和可打印的 1:1 纸图必须分别标注、分别验证。</p></article>
+      </div>
+      <div class="callout" style="margin-top:16px"><p><strong>更隐蔽的错误：</strong>内部 BOM 有 10 个部件的 30 个三视页码字段与现版图页不一致，仍引用旧节点号；现有打包校验主要核页数、实体数和哈希，没有拦住语义错位。正式交付包与内部生成源都要检查，且不能由同一生成器只检查自己的输出。</p></div>
+    </section>
+
+    <section class="sop-section" id="architecture">
+      <p class="section-kicker">03 / 系统设计</p>
+      <h2>采用通用内核，按品类加载工艺规则。</h2>
+      <p class="section-intro">单个 Skill 可以做入口，但接单能力必须跨越任务回合、文件和工厂环节。桌、柜、木作、钣金、喷粉、电气和照明按订单启用；不把本单的 8 点 M6、页序或灯光要求硬编码给所有项目。</p>
+      <div class="sop-grid">
+        <article class="sop-card"><span class="number">01 · Skill</span><strong>做判断</strong><p>规定来源优先级、占位识别、冲突处理、主动结构推演、各等级能声称什么，以及何时降级。保持短而稳定。</p></article>
+        <article class="sop-card"><span class="number">02 · Workflow</span><strong>管状态</strong><p>冻结订单输入，维护需求—接口—零件—工序图谱、问题单、版本和交付等级。修改一个件号后重验受影响链路。</p></article>
+        <article class="sop-card"><span class="number">03 · Validators</span><strong>拦确定性错误</strong><p>独立回读 PDF/DWG/XLSX/DXF；检查材料、厚度、数量、页码、节点号、1:1、轮廓、孔槽、镜像及成型—展开同版。</p></article>
+        <article class="sop-card"><span class="number">04 · Reviewer</span><strong>挑工程缺陷</strong><p>与生成过程隔离，只看冻结输入和实际交付；审受力路径、装配、维修、喷粉挂具、线缆及缺失条件。</p></article>
+        <article class="sop-card"><span class="number">05 · 实物证据</span><strong>决定放行</strong><p>记录接收方 CAD 操作、同材试折、工装、喷粉试挂与首件结果。数学计算和渲染预览不得写成已实测。</p></article>
+        <article class="sop-card warning"><span class="number">关键防错</span><strong>防止同源共错</strong><p>同一个 JSON 生成所有文件，可能让所有文件一致地错。用独立读取器、参考约束和接收方行为交叉验证最终件。</p></article>
+      </div>
+      <p class="sop-copy">每项要求保存来源类型、文件哈希与图页/实体位置、权威级别、状态（明确／推算／候选／未知／冲突／占位）、适用件号与验收方法。关键材料拆成基材、饰面、阻燃等级、厚度和表面处理；验证记录保存工具版本、测量值、输入输出哈希及执行人。这样“参考图占位”不会被继承为真实 BOM。</p>
+    </section>
+
+    <section class="sop-section" id="workflow">
+      <p class="section-kicker">04 / 接单流程</p>
+      <h2>每一关交出证据，失败只阻断受影响范围。</h2>
+      <p class="section-intro">状态机以“件号 × 工序 × 交付等级”为最小判定单元；喷粉挂点未定，不该阻止有依据的条件报价，但不能交喷粉生产文件。局部阻断要沿接口与父总成关系传播，涉及整桌安全时升级为整单阻断。所有等级由程序根据证据计算，不由 AI 自述。</p>
+      <div class="flow">
+        <div class="flow-step"><span class="step-id">G0 / 输入</span><strong>订单与来源冻结</strong><p>版本、单位、适用品类、客户目标、参考图和冲突列表。</p></div>
+        <div class="flow-step"><span class="step-id">G1 / 需求</span><strong>原子要求追溯</strong><p>每条要求落到件、接口、工序或显式未知，禁止静默丢失。</p></div>
+        <div class="flow-step"><span class="step-id">G2 / 工程</span><strong>方案与风险推演</strong><p>连接、承载、闭合、装配、维护、线缆；候选与已验证分开。</p></div>
+        <div class="flow-step"><span class="step-id">G3 / 出图</span><strong>同版生成</strong><p>总装→分总成→零件→工艺；图册、BOM、下料共享件号。</p></div>
+        <div class="flow-step"><span class="step-id">G4 / 机器校验</span><strong>独立回读</strong><p>实读最终 PDF/DWG/XLSX/DXF 的几何和跨文件引用。PDF 文本若转路径，改用独立 OCR 与逐页视觉定位；读不到的字段标未验证。</p></div>
+        <div class="flow-step"><span class="step-id">G5 / 独立审查</span><strong>反向找错</strong><p>审图者按源约束、工艺、实际文件找漏项与错误放行。</p></div>
+        <div class="flow-step"><span class="step-id">G6 / 实物</span><strong>工厂与首件证据</strong><p>接收方开图、材料与工装参数、试折、试挂、装配和功能。</p></div>
+        <div class="flow-step"><span class="step-id">G7 / 交付</span><strong>分级封包</strong><p>报价包不含生产 DXF；审核包列未决项；放行包附真实记录。</p></div>
+      </div>
+      <p class="sop-copy"><strong>变更传播：</strong>材料、孔位、固定方式或工艺一改，自动找出关联的图页、BOM 行、下料、价格与验证记录；旧证据失效后必须重验，不能靠复制上一版“已通过”。</p>
+      <div class="callout"><p><strong>最小数据合同示例：</strong>源图要求“桌面四周无翘角” → W01 桌面与支承接口 → A01 总装 / W01 零件页 / 固定工序 → 最终 DWG 孔位、正式 BOM 材质和约定工况记录 → 抗翘约束 gate。缺工况或支承验证时结果为 <code>UNVERIFIED</code>，阻断制造审核完整性及生产放行；报价只允许列为明示假设。</p></div>
+    </section>
+
+    <section class="sop-section" id="tiers">
+      <p class="section-kicker">05 / 交付等级</p>
+      <h2>“可接单”先定义可用于哪一步。</h2>
+      <p class="section-intro">选择等级查看硬门槛。报价稿可以带清楚的假设；生产放行不能借用报价假设。</p>
+      <div class="tier-controls" role="group" aria-label="切换交付等级">
+        <button type="button" data-tier="quote" aria-pressed="true">可询价 / 条件报价</button>
+        <button type="button" data-tier="review" aria-pressed="false">制造审核</button>
+        <button type="button" data-tier="release" aria-pressed="false">生产放行</button>
+      </div>
+      <article class="tier-panel" data-panel="quote">
+        <h3>可询价 / 条件报价</h3><p>让客户和供应商能判断范围及价格区间；不能误用作投料文件。</p>
+        <ul><li>外形、配置、主要件数和材料等级有来源。</li><li>候选材料、成本来源、价格有效期与排除项明示。</li><li>冲突和未知项列出对价格、工期的影响。</li><li>包内显著标“仅供报价”，机器字段 releaseClass=QUOTE。</li></ul>
+        <p class="result">材料、数量或成本依据不足以形成有界区间时，状态为 <code>INTAKE/BLOCKED</code>：仅交缺项和价格敏感性，不报数值。报价包不附可直接生产的下料 DXF。</p>
+      </article>
+      <article class="tier-panel" data-panel="review" hidden>
+        <h3>制造审核</h3><p>工厂能按件审图、给出工艺意见，但仍不是开料命令。</p>
+        <ul><li>总装、真实爆炸、成型图、工艺图、BOM 与下料双向追溯。</li><li>正式 XLSX 含基材、饰面、厚度、表处、数量及图页。</li><li>结构和工艺风险有候选方案、工况与待验证方法。</li><li>DWG/PDF/XLSX/DXF 独立回读，关键语义零冲突。</li></ul>
+        <p class="result">R04 当前名义处于此档，但本页列出的缺口应关闭后才可称“制造审核资料完整”。</p>
+      </article>
+      <article class="tier-panel" data-panel="release" hidden>
+        <h3>生产放行</h3><p>制造数据和真实过程参数均已被接收方验证。</p>
+        <ul><li>审核档缺口清零；材料规格、合格供方与来料验收准则锁定，批次敏感工艺另锁批次。</li><li>接收方 CAD 打开、量测、编辑与图纸实读有记录。</li><li>适用的试折、喷粉挂具、装配首件和功能测试有结果。</li><li>检验方案和适用标准按产品分类与客户要求确认。</li></ul>
+        <p class="result">没有相应实物或接收证据时自动停在制造审核，不能由 AI 声称已放行。</p>
+      </article>
+    </section>
+
+    <section class="sop-section" id="rounds">
+      <p class="section-kicker">06 / 本次团队三轮</p>
+      <h2>三轮审查的是方案，不冒充三轮实物验收。</h2>
+      <p class="section-intro">参考图与 R04 审计、现有 Skill/脚本审计、工作流设计三个角色独立起稿，再相互批驳；最后对 HTML 成稿和发布前文件做盲点审查。</p>
+      <div class="review-rounds">
+        <div class="review-round"><span class="round-label">ROUND 1 · 已完成</span><div><h3>独立证据回放</h3><p>三路分别审源图与成品、Skill 与生成器、接单架构。以文件内容和工程师微信意见对照，区分缺陷、候选做法及误报。</p><p class="round-output">冻结结论：缺全桌爆炸、正式 XLSX 材料列、喷粉挂具、跨文件语义关口；腿已部分封闭，DXF 已有原尺寸。</p></div></div>
+        <div class="review-round"><span class="round-label">ROUND 2 · 已完成</span><div><h3>交叉批驳与机制修订</h3><p>审“一个 Skill 就够吗”、同源共错、参考占位、固定页序、1:1 三种语义与局部阻断。重写为通用状态内核、品类规则包、独立校验和分级交付。</p><p class="round-output">冻结结论：源图的无翘角是目标、角码是候选；机器只判一致性，实物证据另列；报价不被制造缺项整单卡死。</p></div></div>
+        <div class="review-round"><span class="round-label">ROUND 3 · 已完成</span><div><h3>成稿逆向验收</h3><p>三路复核事实、Skill 落地性及手机端呈现。发现 PDF 文字路径化、报价缺阻断态、风险传播范围不清、正文偏小和规则合同欠具体。</p><p class="round-output">修订结果：增加独立 OCR/视觉回读、INTAKE/BLOCKED、父总成传播、可执行 gate 样例和盲测停止规则；手机 320–430 px 复核无横向溢出。本轮未验证新订单泛化。</p></div></div>
+      </div>
+    </section>
+
+    <section class="sop-section" id="evaluation">
+      <p class="section-kicker">07 / 能力评估</p>
+      <h2>先在 R04 拦住已知错误，再用新订单检验泛化。</h2>
+      <p class="section-intro">R04 与微信反馈只做开发回放集。冻结 SOP 后，未来真实订单按项目、客户和工厂隔离为保留集；同一订单的修订版不得同时出现在训练与盲测侧。盲测不给生成角色工程师结论，由独立审查者标注并裁决分歧。</p>
+      <div class="score-grid">
+        <div class="score-card"><strong>关键需求召回率</strong><p>正确捕获的关键要求 ÷ 独立金标关键要求。目标：已知 R04 关键要求全有落点或明确待定。</p></div>
+        <div class="score-card"><strong>严重缺陷逃逸率</strong><p>升级后才发现严重问题的订单 ÷ 已升级订单。生产级任何未证实放行都算失败。</p></div>
+        <div class="score-card"><strong>跨文件语义一致率</strong><p>通过的必填字段比对 ÷ 全部必填字段比对；同时记录误拦与错误定位。</p></div>
+        <div class="score-card"><strong>工厂一次接收率</strong><p>无需退回补材质、页码、工序或格式即可受理的交付包 ÷ 提交包。</p></div>
+        <div class="score-card"><strong>人工时间与返工</strong><p>记录人工审图分钟/单、返工工时/单及出图周期；比较同类订单，而不是只比页数。</p></div>
+        <div class="score-card"><strong>已知故障注入</strong><p>故意移孔但保持实体类型、缩放 DXF、删材料列、错置图页、漏挂点，验证门槛是否真正阻断。</p></div>
+      </div>
+      <h3 style="margin:28px 0 10px">可执行 gate 合同：R04 回放样例</h3>
+      <p class="sop-copy">每条规则均保存适用条件、最终文件输入、判定谓词、缺证状态、阻断等级和传播范围。下列判定是待实现的规则合同，不宣称现有校验器已经执行。</p>
+      <div class="gate-grid">
+        <article class="gate-card"><h3>MAT-01 · 桌面材料</h3><dl><dt>适用</dt><dd>有 W01 木作桌面时</dd><dt>输入</dt><dd>正式 BOM、W01 图页、冻结材料要求</dd><dt>谓词</dt><dd>基材、饰面、阻燃等级、厚度和数量一致且非占位</dd><dt>缺证</dt><dd>UNVERIFIED</dd><dt>阻断</dt><dd>制造审核完整性与生产放行</dd><dt>范围</dt><dd>W01 → 桌面接口 → 总成</dd></dl></article>
+        <article class="gate-card"><h3>EXP-01 · 爆炸追溯</h3><dl><dt>适用</dt><dd>多零件总成</dd><dt>输入</dt><dd>最终 PDF/DWG、正式 BOM</dd><dt>谓词</dt><dd>真实分离视图中件号、数量、装回关系与 BOM 双向一致</dd><dt>缺证</dt><dd>UNVERIFIED</dd><dt>阻断</dt><dd>制造审核完整性与生产放行</dd><dt>范围</dt><dd>相关分总成及其父总成</dd></dl></article>
+        <article class="gate-card"><h3>SPR-01 · 喷粉挂具</h3><dl><dt>适用</dt><dd>需喷粉的钢件</dd><dt>输入</dt><dd>F01 工艺页、件号图、供应商挂具记录</dd><dt>谓词</dt><dd>逐件挂点或夹持面、数量、尺寸、遮蔽与外观面无冲突</dd><dt>缺证</dt><dd>UNVERIFIED</dd><dt>阻断</dt><dd>喷粉工序生产放行</dd><dt>范围</dt><dd>受影响钢件及装配接口；若安全相关则总成</dd></dl></article>
+      </div>
+      <p class="sop-copy"><strong>盲测协议：</strong>上线试运行前冻结同一受控产品族的前 20 个合格新单、金标标注方式与停止规则。S0 为错误生产放行或重大安全风险漏项，S1 为导致退单的关键材料、结构或工艺漏项；任一 S0/S1 逃逸即停止自动升级并复盘。20 单零逃逸只能支持该产品族继续受控试运行，不能证明普遍可靠。</p>
+      <div class="callout" style="margin-top:16px"><p><strong>零人工审核的边界：</strong>先在同工厂、同材料和受控尺寸/工艺范围的重复产品族试行“异常才人工审”。连续少量成功只能说明试运行顺利，不能证明新结构的严重缺陷概率为零。对新结构仍需接收方和首件证据。</p></div>
+    </section>
+
+    <section class="sop-section" id="roadmap">
+      <p class="section-kicker">08 / 落地次序</p>
+      <h2>先修会放走错误的关口，再追求更快出图。</h2>
+      <div class="sop-grid">
+        <article class="sop-card"><span class="number">P0 · R04 回放</span><strong>封闭真实反例</strong><p>统一桌面材料；复核四边约束与腿口；补全桌爆炸、喷粉挂具、正式 XLSX 必需列；喷粉图排在本单工艺包末尾并修复 BOM 旧引用。每项保留修前/修后证据。</p></article>
+        <article class="sop-card"><span class="number">P0 · 验收器</span><strong>先做语义 gate</strong><p>对最终文件实读材料、数量、页码、节点和工艺引用；几何坐标而非仅实体数；1:1 分开核。</p></article>
+        <article class="sop-card"><span class="number">P1 · 接单引擎</span><strong>建立状态机</strong><p>订单输入、件号与接口图谱、变更传播、分级封包、局部阻断和可追溯问题单。</p></article>
+        <article class="sop-card"><span class="number">P1 · 品类规则</span><strong>桌与柜分 profile</strong><p>共用证据合同；木作、钣金、喷粉、电气、灯光按实际配置启用，避免套错参考案例。</p></article>
+        <article class="sop-card"><span class="number">P2 · Shadow mode</span><strong>真实新单盲测</strong><p>AI 独立交稿，人工和工厂照常验收；记录严重逃逸、一次接收、返工与人工分钟数。</p></article>
+        <article class="sop-card"><span class="number">P3 · 受控自动化</span><strong>逐步减人审</strong><p>仅对已验证的重复产品族及参数包络开放自动交稿；新结构和异常自动回退审核。</p></article>
+      </div>
+      <p class="sop-copy">本页是能力蒸馏与实施方案，尚未实现上述 workflow，也未证明 AI 已可无人工接新订单。R04 公开资料维持制造审核状态；任何后续修订须新建版本并重新验收。</p>
+    </section>
+
+    <section class="sop-section" id="sources">
+      <p class="section-kicker">证据与适用边界</p>
+      <h2>可公开复核的依据</h2>
+      <ol class="source-list">
+        <li><a href="../hw73005-l2000/">HW73005-L2000 项目交付页</a>、<a href="../hw73005-l2000/files/R04/HW73005-L2000_R04.pdf">R04 图册</a>、<a href="../hw73005-l2000/files/R04/HW73005-L2000_R04_部件与五金采购清单.xlsx">正式采购清单</a>及<a href="../hw73005-l2000/files/R04/validation.json">验证摘要</a>。内部参考图、聊天截图与个人信息不在本页公开。</li>
+        <li><a href="https://committee.iso.org/files/live/sites/tc176/files/documents/ISO%209001%20Auditing%20Practices%20Group%20docs/Auditing%20to%20ISO%209001%202015/APG-Design%26Development2015.pdf">ISO/IAF 设计开发审核指南</a>用于区分设计评审、验证和确认，不构成本项目认证声明。</li>
+        <li><a href="https://openstd.samr.gov.cn/bzgk/std/newGbInfo?hcno=8AE04BC7347FB41F629438823421EB48">GB/T 10357.1-2024 桌类强度和耐久性试验</a>及<a href="https://openstd.samr.gov.cn/bzgk//std/std_list?p.p1=0&p.p2=GB%2FT10357.7-2025">GB/T 10357.7-2025 桌类稳定性试验</a>可作为确定本类产品试验方案时的候选依据；具体适用性须按产品分类和客户要求核定。</li>
+      </ol>
+    </section>
+  </main>
+  <footer class="site-footer sop-footer"><span>AI 接单能力蒸馏方案 · R04 复盘</span><a href="../hw73005-l2000/">返回项目交付页 ↗</a></footer>
+  <script>
+    const buttons = [...document.querySelectorAll('[data-tier]')];
+    const panels = [...document.querySelectorAll('[data-panel]')];
+    buttons.forEach(button => button.addEventListener('click', () => {
+      const tier = button.dataset.tier;
+      buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      panels.forEach(panel => { panel.hidden = panel.dataset.panel !== tier; });
+    }));
+  </script>
+</body>
+</html>
