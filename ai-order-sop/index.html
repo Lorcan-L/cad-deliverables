@@ -201,6 +201,7 @@
         <div class="flow-step"><span class="step-id">G6 / 实物</span><strong>工厂与首件证据</strong><p>接收方开图、材料与工装参数、试折、试挂、装配和功能。</p></div>
         <div class="flow-step"><span class="step-id">G7 / 交付</span><strong>按接收人挑文件</strong><p>结构审图默认一份内容自足的 DWG；报价、采购、加工按各自用途另组文件，放行依赖真实记录。</p></div>
       </div>
+      <div class="callout" style="margin-top:16px"><p><strong>让 AI 像工程师推进：</strong>先沿载荷、连接、运动、走线、加工与装配路径找失效点；每个问题记来源、件号/接口、失效后果、候选方案、采用依据和验证结果。能从图纸、规格或计算确认的先自行处理；缺工况或首件证据的标 <code>UNVERIFIED</code>，只对会改变关键方案的分歧集中追问。结构定案后才改成型图和件表，最后由另一遍审图从最终 DWG 反查来源与每个零件。</p></div>
       <p class="sop-copy"><strong>变更传播：</strong>材料、孔位、固定方式或工艺一改，自动找出关联的图页、BOM 行、下料、价格与验证记录；旧证据失效后必须重验，不能靠复制上一版“已通过”。</p>
       <div class="callout"><p><strong>最小数据合同示例：</strong>源图要求“桌面四周无翘角” → W01 桌面与支承接口 → A01 总装 / W01 零件页 / 固定工序 → 最终 DWG 孔位、正式 BOM 材质和约定工况记录 → 抗翘约束 gate。缺工况或支承验证时结果为 <code>UNVERIFIED</code>，阻断制造审核完整性及生产放行；报价只允许列为明示假设。</p></div>
     </section>
@@ -288,7 +289,7 @@
       <p class="section-kicker">10 / 落地次序</p>
       <h2>先修会放走错误的关口，再追求更快出图。</h2>
       <div class="sop-grid">
-        <article class="sop-card"><span class="number">P0 · R04 回放</span><strong>封闭真实反例</strong><p>统一桌面材料；复核四边约束与腿口；补全桌爆炸、喷粉挂具、正式 XLSX 必需列；喷粉图排在本单工艺包末尾并修复 BOM 旧引用。每项保留修前/修后证据。</p></article>
+        <article class="sop-card"><span class="number">P0 · R04 回放</span><strong>先结构后出图</strong><p>先核桌面四边约束、腿口闭合与走线、喷粉挂具和材料一致性；逐项记录方案与证据。再补全桌爆炸、图内件表和必要尺寸，按工程师审图顺序整理一份 DWG；修复 BOM 旧引用。每项保留修前/修后证据，工厂首件仍单列。</p></article>
         <article class="sop-card"><span class="number">P0 · 验收器</span><strong>先做语义 gate</strong><p>对最终文件实读材料、数量、页码、节点和工艺引用；几何坐标而非仅实体数；1:1 分开核。</p></article>
         <article class="sop-card"><span class="number">P1 · 接单引擎</span><strong>建立状态机</strong><p>把已建的单入口 Skill 接到订单输入、产品树、关键追问、变更传播、分级封包与可追溯问题单。</p></article>
         <article class="sop-card"><span class="number">P1 · 条件规则</span><strong>从产品树组合模块</strong><p>共用三视/爆炸/逐组拆件骨架；门抽、玻璃展示、木作、钣金、喷粉、电气、灯光按本单需求生成图页和 gate。</p></article>
